@@ -83,7 +83,6 @@ uses
   // Dependency Injection Plugin
   dfe.engine.acbr,
   dfe.engine.tecnospeed,
-  dfe.engine.interfaces,
   // InjectorBr
   app.injector;
 
@@ -91,12 +90,12 @@ uses
 
 procedure TPrincipalView.ACT_InjectionExecute(Sender: TObject);
 var
-  LForm: TFormInjectorBr;
+  LForm: TFormInjctorBr;
 begin
   if PanelForm.ControlCount > 0 then
     PanelForm.Controls[0].Free;
 
-  LForm := TFormInjectorBr.Create(PanelForm);
+  LForm := TFormInjctorBr.Create(PanelForm);
   LForm.Parent := PanelForm;
   LForm.Show;
 end;
@@ -115,8 +114,8 @@ end;
 
 procedure TPrincipalView.FormCreate(Sender: TObject);
 begin
-//  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineTecnoSpeed>;
-  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineACBr>;
+  InjectorBr.RegisterLazy<TDFeEngineTecnoSpeed>;
+  InjectorBr.RegisterLazy<TDFeEngineACBr>;
 end;
 
 initialization

@@ -24,7 +24,7 @@
   @author(Site : https://www.isaquepinheiro.com.br)
 }
 
-unit injection.form.view;
+unit tradicional.form.view;
 
 interface
 
@@ -41,43 +41,56 @@ uses
   StdCtrls,
   ExtCtrls,
   base.form.view,
-  // Usando o Framework - Dependência só da Unit da Interface
-  global.controller.interfaces,
-  app.injector;
+  // Tradicional
+  global.controller;
 
 type
-  TFormInjectorBr = class(TFormBase)
-    ButtonEngine: TButton;
-    Label1: TLabel;
+  TFormTradicional = class(TFormBase)
+    ButtonOpen: TButton;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
-    procedure ButtonEngineClick(Sender: TObject);
+    procedure ButtonOpenClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
-    FController: IGlobalController;
+    FController: TGlobalController;
   public
     { Public declarations }
   end;
 
 //var
-//  FormEmitente: TFormEmitente;
+//  FormConfiguracao: TFormConfiguracao;
 
 implementation
 
 uses
-  dfe.engine.interfaces;
+  app.injector;
 
 {$R *.dfm}
 
-procedure TFormInjectorBr.FormCreate(Sender: TObject);
+procedure TFormTradicional.Button1Click(Sender: TObject);
 begin
   inherited;
-  FController := InjectorBr.GetInterface<IGlobalController>;
+  FController.DFeExecuteTS;
 end;
 
-procedure TFormInjectorBr.ButtonEngineClick(Sender: TObject);
+procedure TFormTradicional.ButtonOpenClick(Sender: TObject);
 begin
   inherited;
-  FController.DFeExecute;
+  FController.DFeExecuteACBr;
+end;
+
+procedure TFormTradicional.FormCreate(Sender: TObject);
+begin
+  inherited;
+  FController := TGlobalController.Create;
+end;
+
+procedure TFormTradicional.FormDestroy(Sender: TObject);
+begin
+  FController.Free;
+  inherited;
 end;
 
 end.

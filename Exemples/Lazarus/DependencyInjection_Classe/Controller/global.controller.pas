@@ -24,26 +24,55 @@
   @author(Site : https://www.isaquepinheiro.com.br)
 }
 
-unit app.injector.abstract;
-
-{$ifdef fpc}
-  {$mode delphi}{$H+}
-{$endif}
+unit global.controller;
 
 interface
 
 uses
-  Generics.Collections;
+  DB,
+  Rtti,
+  Classes,
+  SysUtils,
+  Controls,
+  dfe.engine.acbr,
+  dfe.engine.tecnospeed;
 
 type
-  TInjectorAbstract = class
-  protected
-    FRegisterInterfaces: TDictionary<string, TClass>;
-    FRepository: TDictionary<string, TClass>;
-    FRepositoryLazy: TList<string>;
-    FRepositoryInterface: TDictionary<string, IInterface>;
+  TGlobalController = class
+  private
+    FDFeEngineACBr: TDFeEngineACBr;
+    FDFeEngineTS: TDFeEngineTecnoSpeed;
+  public
+    constructor Create;
+    procedure DFeExecuteACBr;
+    procedure DFeExecuteTS;
   end;
 
 implementation
+
+uses
+  app.injector;
+
+{ TGlobalController }
+
+constructor TGlobalController.Create;
+begin
+  inherited;
+  FDFeEngineACBr := InjectorBr.Get<TDFeEngineACBr>;
+  FDFeEngineTS := InjectorBr.Get<TDFeEngineTecnoSpeed>;
+end;
+
+procedure TGlobalController.DFeExecuteACBr;
+begin
+  FDFeEngineACBr.Execute;
+end;
+
+procedure TGlobalController.DFeExecuteTS;
+begin
+  FDFeEngineTS.Execute;
+end;
+
+initialization
+  InjectorBr.RegisterSington<TGlobalController>;;
 
 end.

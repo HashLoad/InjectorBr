@@ -77,14 +77,12 @@ object PrincipalView: TPrincipalView
       AutoSize = False
       Caption = 
         'Nesse exemplo, voc'#234' ver'#225' o uso de inje'#231#227'o de depend'#234'ncia de clas' +
-        'ses como interface.'#13#10#13#10'Nesse formul'#225'rio principal, foi usado a i' +
-        'nje'#231#227'o de depend'#234'ncia para disponibilizar o Engine emissor de no' +
-        'ta fisca para ser usado em todo ponto necess'#225'riol, no caso aqu a' +
-        'presentado pode-se trocar a classe de ACBr para TecnoSpeed, muda' +
-        'ndo somente a linha que foi usada para a injetar a classe usada.' +
-        #13#10#13#10'Veja no OnCreate()'#13#10#13#10'Depois veja no TGlobalController a dep' +
-        'end'#234'ncia sendo capturada e usada, sem ter vincula com nenhuma da' +
-        's classes, nem ACBr e Nem TecnoSpeed, pois usa a Interface.'
+        'ses sem interface, mas com recurso de LAZY.'#13#10#13#10'Nesse formul'#225'rio ' +
+        'principal, foi usado a inje'#231#227'o de depend'#234'ncia para disponibiliza' +
+        'r o Engine emissor de nota fisca para ser usado em todo ponto ne' +
+        'cess'#225'riol, no caso aqui apresentado foram adicionados no Injecto' +
+        'rBr todos mecanismo existentes.'#13#10#13#10'Veja no OnCreate()'#13#10#13#10'Depois ' +
+        'veja no TGlobalController a depend'#234'ncia sendo capturada e usada.'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -147,7 +145,7 @@ object PrincipalView: TPrincipalView
     Left = 404
     Top = 238
     Bitmap = {
-      494C0101030080001C0020002000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010103008000200020002000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

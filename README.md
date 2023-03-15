@@ -26,7 +26,7 @@ Copyright (c) 2023 InjectorBr Framework Team
 
 # Como usar - Interface ?
 
-### Registrando a interface no InjectorBr
+### Registrando
 
 ```Delphi
 unit dfe.engine.acbr;
@@ -63,7 +63,7 @@ initialization
 
 end.
 ```
-### Recuperando a interface do InjectorBr para usa-la.
+### Recuperando
 ```Delphi
 unit global.controller;
 
@@ -109,7 +109,7 @@ end.
 ```
 # Como usar - Classe ?
 
-### Registrando a classe no InjectorBr
+### Registrando
 ```Delphi
 unit dfe.engine.acbr;
 
@@ -138,7 +138,7 @@ initialization
 
 end.
 ```
-### Recuperando a classe do InjectorBr para usa-la.
+### Recuperando
 ```Delphi
 unit global.controller;
 
@@ -172,7 +172,7 @@ uses
 constructor TGlobalController.Create;
 begin
   inherited;
-  FDFeEngine := InjectorBr.Get<IDFeEngineACBr>;
+  FDFeEngine := InjectorBr.Get<TDFeEngineACBr>;
 end;
 
 procedure TGlobalController.DFeExecute;
@@ -185,7 +185,7 @@ end.
 
 # Como usar - Classe LazyLoad ?
 
-### Registrando a classe no InjectorBr
+### Registrando
 ```Delphi
 unit dfe.engine.acbr;
 
@@ -214,7 +214,7 @@ initialization
 
 end.
 ```
-### Recuperando a classe do InjectorBr para usa-la.
+### Recuperando
 ```Delphi
 unit global.controller;
 

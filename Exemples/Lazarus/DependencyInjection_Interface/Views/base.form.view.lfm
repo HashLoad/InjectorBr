@@ -1,0 +1,44 @@
+object FormBase: TFormBase
+  Left = 350
+  Height = 511
+  Top = 31
+  Width = 584
+  Caption = 'FormBase'
+  ClientHeight = 511
+  ClientWidth = 584
+  object PanelTitle: TPanel
+    Left = 0
+    Height = 23
+    Top = 0
+    Width = 584
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 23
+    ClientWidth = 584
+    TabOrder = 0
+    object ButtonClose: TButton
+      Left = 561
+      Height = 23
+      Top = 0
+      Width = 23
+      Align = alRight
+      Caption = 'X'
+      ModalResult = 1
+      OnClick = ButtonCloseClick
+      TabOrder = 0
+    end
+    object LabelTitle: TLabel
+      Left = 0
+      Height = 23
+      Top = 0
+      Width = 561
+      Align = alClient
+      Caption = 'Form Base'
+      Font.Color = clWindowText
+      Font.Height = -19
+      Font.Name = 'Tahoma'
+      ParentColor = False
+      ParentFont = False
+    end
+  end
+end

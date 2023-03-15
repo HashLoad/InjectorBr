@@ -1,0 +1,29 @@
+inherited FormInjectorBr: TFormInjectorBr
+  Caption = 'FormInjectorBr'
+  OnCreate = FormCreate
+  object Label1: TLabel[1]
+    Left = 44
+    Height = 65
+    Top = 58
+    Width = 493
+    Anchors = []
+    AutoSize = False
+    Caption = 'RECOMENDADO: Nessa forma você verá que vai exitir dependências somente da unit da Interface, essa é a melhor forma de se usar injeção de dependência'
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    ParentColor = False
+    ParentFont = False
+    WordWrap = True
+  end
+  object ButtonEngine: TButton[2]
+    Left = 221
+    Height = 25
+    Top = 240
+    Width = 136
+    Anchors = []
+    Caption = 'Execute Engine'
+    OnClick = ButtonEngineClick
+    TabOrder = 1
+  end
+end

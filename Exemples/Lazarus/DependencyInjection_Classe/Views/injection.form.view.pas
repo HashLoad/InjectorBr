@@ -24,50 +24,64 @@
   @author(Site : https://www.isaquepinheiro.com.br)
 }
 
-unit app.injector.factory;
-
-{$ifdef fpc}
-  {$mode delphi}{$H+}
-{$endif}
+unit injection.form.view;
 
 interface
 
-uses Generics.Collections,
-     app.injector.abstract;
+uses
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  StdCtrls,
+  ExtCtrls,
+  base.form.view,
+  // Usando o Framework
+  global.controller,
+  app.injector;
 
 type
-  TInjectorFactory = class(TInjectorAbstract)
+  TFormInjctorBr = class(TFormBase)
+    ButtonEngine: TButton;
+    Button1: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure ButtonEngineClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+    FController: TGlobalController;
   public
-    constructor Create;
-    destructor Destroy; override;
+    { Public declarations }
   end;
+
+//var
+//  FormEmitente: TFormEmitente;
 
 implementation
 
-{ TInjectorFactory }
+{$R *.dfm}
 
-constructor TInjectorFactory.Create;
+procedure TFormInjctorBr.FormCreate(Sender: TObject);
 begin
-  FRegisterInterfaces := TDictionary<string, TClass>.Create;
-  FRepository := TDictionary<string, TClass>.Create;
-  FRepositoryLazy := TList<string>.Create;
-  FRepositoryInterface := TDictionary<string, IInterface>.Create;
+  inherited;
+  FController := InjectorBr.Get<TGlobalController>;
 end;
 
-destructor TInjectorFactory.Destroy;
-var
-  LValue: TClass;
+procedure TFormInjctorBr.Button1Click(Sender: TObject);
 begin
-  for LValue in FRepository.Values do
-    if Assigned(LValue) then
-      TObject(LValue).Free;
-  FRepository.Free;
-  FRepositoryLazy.Free;
-  FRegisterInterfaces.Clear;
-  FRegisterInterfaces.Free;
-  FRepositoryInterface.Clear;
-  FRepositoryInterface.Free;
   inherited;
+  FController.DFeExecuteTS;
+end;
+
+procedure TFormInjctorBr.ButtonEngineClick(Sender: TObject);
+begin
+  inherited;
+  FController.DFeExecuteACBr;
 end;
 
 end.
