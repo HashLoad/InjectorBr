@@ -24,7 +24,7 @@ Embarcadero Delphi XE e superior.
 
 Copyright (c) 2023 InjectorBr Framework Team
 
-## Como usar - Interface ?
+# Como usar - Interface ?
 
 ### Registrando a interface no InjectorBr
 
@@ -107,7 +107,7 @@ end;
 
 end.
 ```
-## Como usar - Classe ?
+# Como usar - Classe ?
 
 ### Registrando a classe no InjectorBr
 ```Delphi
@@ -183,7 +183,7 @@ end;
 end.
 ```
 
-## Como usar - Classe LazyLoad ?
+# Como usar - Classe LazyLoad ?
 
 ### Registrando a classe no InjectorBr
 ```Delphi
