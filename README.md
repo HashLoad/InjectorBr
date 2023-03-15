@@ -6,11 +6,11 @@
 # InjectorBr Framework for Delphi   [![License](https://img.shields.io/badge/Licence-LGPL--3.0-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
 APPInjector Brasil - Dependency Injection for Delphi
 
-# :hammer: Existem três recuros de usar injeção de dependência com o InjectorBr são elas:
+# :hammer: Recuros de injeção de dependência com InjectorBr :
 
-- `Recurso 1`: Injector.Register<TClass> (Class)
-- `Recurso 2`: Injector.RegisterLazy<TClass> (Class for LazyLoad)
-- `Recurso 3`: InjectorInterface<IInterface> (Interface)
+:heavy_check_mark: `Recurso 1`: Injector.Register<TClass> (Class)
+:heavy_check_mark: `Recurso 2`: Injector.RegisterLazy<TClass> (Class for LazyLoad)
+:heavy_check_mark: `Recurso 3`: InjectorInterface<IInterface> (Interface)
 
 Além dessas três formas o framework ainda oferece o recurso de criar uma nova instância de uma classe que já esteja registras, para isso basta usar o comando:
  - Injector<TClass>.New;
