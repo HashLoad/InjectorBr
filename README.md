@@ -16,7 +16,7 @@ APPInjector Brasil - Dependency Injection for Delphi
 
 Além dessas três formas o framework ainda oferece o recurso de criar uma nova instância de uma classe que já esteja registras, para isso basta usar o comando:
 
-:heavy_check_mark: `Recurso 3`: ```Injector<TClass>.New``` para (Nova instância)
+:heavy_check_mark: ```Injector<TClass>.New``` para (Nova instância)
 
 ### Instalação ###
 O InjectorBr não precisa ser instalado, basta adicionar as units no seu projeto e começar a usa-lo.
