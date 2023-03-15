@@ -107,7 +107,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Views\injection.form.view.pas">
-            <Form>FormInjctorBr</Form>
+            <Form>FormInjectorBr</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Controller\global.controller.interfaces.pas"/>

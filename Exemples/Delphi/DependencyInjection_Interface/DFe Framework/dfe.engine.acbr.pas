@@ -53,7 +53,7 @@ begin
   Result := Self.Create;
 end;
 
-//initialization
-//  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineACBr>;
+initialization
+  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineACBr>;
 
 end.

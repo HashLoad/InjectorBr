@@ -6,7 +6,7 @@ uses
   principal.form.view in 'Views\principal.form.view.pas' {PrincipalView},
   base.form.view in 'Views\base.form.view.pas' {FormBase},
   tradicional.form.view in 'Views\tradicional.form.view.pas' {FormTradicional},
-  injection.form.view in 'Views\injection.form.view.pas' {FormInjctorBr},
+  injection.form.view in 'Views\injection.form.view.pas' {FormInjectorBr},
   global.controller.interfaces in 'Controller\global.controller.interfaces.pas',
   global.controller in 'Controller\global.controller.pas',
   dfe.engine.acbr in 'DFe Framework\dfe.engine.acbr.pas',
