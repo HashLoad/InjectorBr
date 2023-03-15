@@ -6,9 +6,9 @@
 APPInjector Brasil - Dependency Injection for Delphi
 
 Existem três formas de usar injeção de dependência com o InjectorBr são elas:
-1a) Injector.Register<TClass>
-2a) Injector.RegisterLazy<TClass>
-3a) InjectorInterface<IInterface>
+ - Injector.Register<TClass>
+ - Injector.RegisterLazy<TClass>
+ - InjectorInterface<IInterface>
 
 Além dessas três formas o framework ainda oferece o recurso de criar uma nova instância de uma classe que já esteja registras, para isso basta usar o comando:
  - Injector<TClass>.New;
