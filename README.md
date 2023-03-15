@@ -1,5 +1,5 @@
-![InjectorBr Framework](https://www.isaquepinheiro.com.br/imagens/ormbrbitucket.png)  
-![![pageseguro.png](http://www.ormbr.com.br/imagens/pagseguro.png)](https://pag.ae/bglQrWD)
+[InjectorBr Framework](https://www.isaquepinheiro.com.br/imagens/ormbrbitucket.png)  
+[![pageseguro.png](http://www.ormbr.com.br/imagens/pagseguro.png)](https://pag.ae/bglQrWD)
 
 
 # InjectorBr Framework for Delphi   [![License](https://img.shields.io/badge/Licence-LGPL--3.0-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
