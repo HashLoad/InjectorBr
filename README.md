@@ -9,7 +9,9 @@ APPInjector Brasil - Dependency Injection for Delphi
 # :hammer: Recuros de injeção de dependência com InjectorBr :
 
 :heavy_check_mark: `Recurso 1`: Injector.Register<TClass> (Class)
+
 :heavy_check_mark: `Recurso 2`: Injector.RegisterLazy<TClass> (Class for LazyLoad)
+
 :heavy_check_mark: `Recurso 3`: InjectorInterface<IInterface> (Interface)
 
 Além dessas três formas o framework ainda oferece o recurso de criar uma nova instância de uma classe que já esteja registras, para isso basta usar o comando:
