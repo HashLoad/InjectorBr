@@ -107,13 +107,11 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Views\injection.form.view.pas">
-            <Form>FormInjectorBr</Form>
+            <Form>FormInjctorBr</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Controller\global.controller.interfaces.pas"/>
         <DCCReference Include="Controller\global.controller.pas"/>
         <DCCReference Include="DFe Framework\dfe.engine.acbr.pas"/>
-        <DCCReference Include="DFe Framework\dfe.engine.interfaces.pas"/>
         <DCCReference Include="DFe Framework\dfe.engine.tecnospeed.pas"/>
         <DCCReference Include="..\..\..\Source\app.injector.abstract.pas"/>
         <DCCReference Include="..\..\..\Source\app.injector.factory.pas"/>

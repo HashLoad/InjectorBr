@@ -1,0 +1,172 @@
+object FormPrincipal: TFormPrincipal
+  Left = 350
+  Height = 600
+  Top = 31
+  Width = 800
+  Caption = 'FormPrincipal'
+  ClientHeight = 600
+  ClientWidth = 800
+  OnCreate = FormCreate
+  WindowState = wsMaximized
+  object pnlToolbar: TPanel
+    Left = 0
+    Height = 50
+    Top = 0
+    Width = 800
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 50
+    ClientWidth = 800
+    Color = 12477460
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object imgMenu: TImage
+      Cursor = crHandPoint
+      Left = 10
+      Height = 32
+      Top = 10
+      Width = 32
+    end
+    object lblTitle: TLabel
+      Left = 48
+      Height = 21
+      Top = 12
+      Width = 259
+      Caption = 'Dependency Injection (InjectorBr)'
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 550
+    Top = 50
+    Width = 200
+    Align = alLeft
+    BevelOuter = bvNone
+    Caption = 'Panel1'
+    ClientHeight = 550
+    ClientWidth = 200
+    Color = clBackground
+    ParentColor = False
+    TabOrder = 1
+    object BitBtn1: TBitBtn
+      Left = 0
+      Height = 35
+      Top = 0
+      Width = 200
+      Align = alTop
+      Caption = 'Sem InjectorBr'
+      Images = imlIcons
+      ImageIndex = 2
+      OnClick = BitBtn1Click
+      Spacing = 10
+      TabOrder = 0
+    end
+    object Panel2: TPanel
+      Left = 0
+      Height = 515
+      Top = 35
+      Width = 200
+      Align = alLeft
+      BevelOuter = bvNone
+      Caption = 'Panel2'
+      ClientHeight = 515
+      ClientWidth = 200
+      Color = clBackground
+      ParentColor = False
+      TabOrder = 1
+      object BitBtn2: TBitBtn
+        Left = 0
+        Height = 35
+        Top = 0
+        Width = 200
+        Align = alTop
+        Caption = 'Com InjectorBr'
+        Images = imlIcons
+        ImageIndex = 2
+        OnClick = BitBtn2Click
+        Spacing = 10
+        TabOrder = 0
+      end
+    end
+  end
+  object PanelForm: TPanel
+    Left = 200
+    Height = 550
+    Top = 50
+    Width = 600
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 550
+    ClientWidth = 600
+    ParentBackground = False
+    TabOrder = 2
+    object PanelForm1: TPanel
+      Left = 0
+      Height = 550
+      Top = 0
+      Width = 600
+      Align = alClient
+      BevelOuter = bvNone
+      ClientHeight = 550
+      ClientWidth = 600
+      ParentBackground = False
+      TabOrder = 0
+      object Label1: TLabel
+        Left = 60
+        Height = 297
+        Top = 102
+        Width = 493
+        Anchors = []
+        AutoSize = False
+        Caption = 'Nesse exemplo, você verá o uso de injeção de dependência de classes como interface.'#13#10#13#10'Nesse formulário principal, foi usado a injeção de dependência para disponibilizar o Engine emissor de nota fisca para ser usado em todo ponto necessáriol, no caso aqu apresentado pode-se trocar a classe de ACBr para TecnoSpeed, mudando somente a linha que foi usada para a injetar a classe usada.'#13#10#13#10'Veja no OnCreate()'#13#10#13#10'Depois veja no TGlobalController a dependência sendo capturada e usada, sem ter vincula com nenhuma das classes, nem ACBr e Nem TecnoSpeed, pois usa a Interface.'
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Tahoma'
+        ParentColor = False
+        ParentFont = False
+        WordWrap = True
+      end
+    end
+  end
+  object ActionList1: TActionList
+    Images = imlIcons
+    Left = 368
+    Top = 192
+    object ACT_Home: TAction
+      Caption = 'Home'
+      ImageIndex = 1
+    end
+    object ACT_Tradicional: TAction
+      Caption = 'Sem InjectionBr'
+      ImageIndex = 2
+    end
+    object ACT_Injection: TAction
+      Caption = 'Com InjectorBr'
+      ImageIndex = 2
+    end
+    object ACT_ExecuteAll: TAction
+      Caption = 'ACT_ExecuteAll'
+    end
+  end
+  object imlIcons: TImageList
+    Height = 32
+    Width = 32
+    Left = 368
+    Top = 272
+    Bitmap = {
+      4C7A0300000020000000200000009B0000000000000078DAEDD8410A84301044
+      D1BEFFA57556B310858CE98E8DF3840F22C2AFC4840A46C41600BE7CAEA880DF
+      DA82FDCF0FD8FFFC0080BB3DD5A1233BF4F353E35E99E1CAB522C399E3785F95
+      E1CA3DF2ACDA5D9961D45D91E157776686BBEE8C0CB3EEAC0C1967F1D99E78FA
+      CCCFDFD33FFB2E3F3F3F00E0EDFFFD473BA18BBF7A7EF97BFBADFFFCB9ADFEFE
+      FCFCFCFC6FF0FF6BFF00ABD9019E108966
+    }
+  end
+end

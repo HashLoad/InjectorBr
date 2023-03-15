@@ -24,7 +24,7 @@
   @author(Site : https://www.isaquepinheiro.com.br)
 }
 
-unit app.injector.abstract;
+unit global.controller;
 
 {$ifdef fpc}
   {$mode delphi}{$H+}
@@ -33,17 +33,48 @@ unit app.injector.abstract;
 interface
 
 uses
-  Generics.Collections;
+  DB,
+  Rtti,
+  Classes,
+  SysUtils,
+  Controls,
+  global.controller.interfaces,
+  dfe.engine.interfaces;
 
 type
-  TInjectorAbstract = class
-  protected
-    FRegisterInterfaces: TDictionary<string, TClass>;
-    FRepository: TDictionary<string, TClass>;
-    FRepositoryLazy: TList<string>;
-    FRepositoryInterface: TDictionary<string, IInterface>;
+  TGlobalController = class(TInterfacedObject, IGlobalController)
+  private
+    FDFeEngine: IDFeEngine;
+  public
+    constructor Create;
+    class function New: IGlobalController;
+    procedure DFeExecute;
   end;
 
 implementation
+
+uses
+  app.injector;
+
+{ TGlobalController }
+
+constructor TGlobalController.Create;
+begin
+  inherited;
+  FDFeEngine := InjectorBr.GetInterface<IDFeEngine>;
+end;
+
+procedure TGlobalController.DFeExecute;
+begin
+  FDFeEngine.Execute;
+end;
+
+class function TGlobalController.New: IGlobalController;
+begin
+  Result := Self.Create;
+end;
+
+initialization
+  InjectorBr.RegisterInterface<IGlobalController, TGlobalController>;;
 
 end.

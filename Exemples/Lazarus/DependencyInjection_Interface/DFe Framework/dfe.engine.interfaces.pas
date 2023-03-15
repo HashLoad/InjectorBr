@@ -24,24 +24,14 @@
   @author(Site : https://www.isaquepinheiro.com.br)
 }
 
-unit app.injector.abstract;
-
-{$ifdef fpc}
-  {$mode delphi}{$H+}
-{$endif}
+unit dfe.engine.interfaces;
 
 interface
 
-uses
-  Generics.Collections;
-
 type
-  TInjectorAbstract = class
-  protected
-    FRegisterInterfaces: TDictionary<string, TClass>;
-    FRepository: TDictionary<string, TClass>;
-    FRepositoryLazy: TList<string>;
-    FRepositoryInterface: TDictionary<string, IInterface>;
+  IDFeEngine = interface
+    ['{75DB6601-D6B0-4A5A-B48D-6453366FCBC2}']
+    procedure Execute;
   end;
 
 implementation

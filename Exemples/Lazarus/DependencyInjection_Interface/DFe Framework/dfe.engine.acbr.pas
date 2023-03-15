@@ -24,26 +24,36 @@
   @author(Site : https://www.isaquepinheiro.com.br)
 }
 
-unit app.injector.abstract;
-
-{$ifdef fpc}
-  {$mode delphi}{$H+}
-{$endif}
+unit dfe.engine.acbr;
 
 interface
 
 uses
-  Generics.Collections;
+  SysUtils,
+  dfe.engine.interfaces;
 
 type
-  TInjectorAbstract = class
-  protected
-    FRegisterInterfaces: TDictionary<string, TClass>;
-    FRepository: TDictionary<string, TClass>;
-    FRepositoryLazy: TList<string>;
-    FRepositoryInterface: TDictionary<string, IInterface>;
+  TDFeEngineACBr = class(TInterfacedObject, IDFeEngine)
+  public
+    class function New: IDFeEngine;
+    procedure Execute;
   end;
 
 implementation
+
+{ TDFeEngineACBr }
+
+procedure TDFeEngineACBr.Execute;
+begin
+  raise Exception.Create('DFe Engine ACBr');
+end;
+
+class function TDFeEngineACBr.New: IDFeEngine;
+begin
+  Result := Self.Create;
+end;
+
+//initialization
+//  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineACBr>;
 
 end.

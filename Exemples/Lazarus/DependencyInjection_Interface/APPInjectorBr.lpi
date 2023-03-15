@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
+    <General>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="APPInjectorBr"/>
+      <Scaled Value="True"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <XPManifest>
+        <DpiAware Value="True"/>
+      </XPManifest>
+      <Icon Value="0"/>
+    </General>
+    <BuildModes>
+      <Item Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+    </RunParams>
+    <RequiredPackages>
+      <Item>
+        <PackageName Value="LCL"/>
+      </Item>
+    </RequiredPackages>
+    <Units>
+      <Unit>
+        <Filename Value="APPInjectorBr.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Views\base.form.view.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormBase"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Views\principal.form.view.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormPrincipal"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Controller\global.controller.interfaces.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Controller\global.controller.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="DFe Framework\dfe.engine.acbr.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="DFe Framework\dfe.engine.interfaces.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="DFe Framework\dfe.engine.tecnospeed.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Views\tradicional.form.view.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormTradicional"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Views\injector.form.view.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormInjectorBr"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\Source\app.injector.abstract.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\Source\app.injector.factory.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\Source\app.injector.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="D:\lazarus\components\sparta\generics\source\sparta_generics.collections.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="sparta_Generics.Collections"/>
+      </Unit>
+      <Unit>
+        <Filename Value="D:\lazarus\components\sparta\generics\source\sparta_generics.defaults.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="sparta_Generics.Defaults"/>
+      </Unit>
+      <Unit>
+        <Filename Value="D:\lazarus\components\sparta\generics\source\sparta_generics.hashes.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="sparta_Generics.Hashes"/>
+      </Unit>
+      <Unit>
+        <Filename Value="D:\lazarus\components\sparta\generics\source\sparta_generics.helpers.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="sparta_Generics.Helpers"/>
+      </Unit>
+      <Unit>
+        <Filename Value="D:\lazarus\components\sparta\generics\source\sparta_generics.memoryexpanders.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="sparta_Generics.MemoryExpanders"/>
+      </Unit>
+      <Unit>
+        <Filename Value="D:\lazarus\components\sparta\generics\source\sparta_generics.strings.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="sparta_Generics.Strings"/>
+      </Unit>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="APPInjectorBr"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="Views;Controller;DFe Framework;..\..\..\Source;D:\lazarus\components\sparta\generics\source\"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf2Set"/>
+      </Debugging>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions>
+      <Item>
+        <Name Value="EAbort"/>
+      </Item>
+      <Item>
+        <Name Value="ECodetoolError"/>
+      </Item>
+      <Item>
+        <Name Value="EFOpenError"/>
+      </Item>
+    </Exceptions>
+  </Debugging>
+</CONFIG>
