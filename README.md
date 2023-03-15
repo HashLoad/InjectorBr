@@ -1,5 +1,5 @@
 [![InjectorBr Framework](https://www.isaquepinheiro.com.br/imagens/injectorbr_github.png)](https://www.isaquepinheiro.com.br)
-<p align="right" width="100%">
+<p align="right" width="50%">
     <a href="https://pag.ae/bglQrWD"><img src="https://www.isaquepinheiro.com.br/imagens/doepagueseguro.png"> 
 </p>
 
