@@ -1,0 +1,33 @@
+inherited FormTradicional: TFormTradicional
+  OnCreate = FormCreate
+  inherited PanelTitle: TPanel
+    inherited LabelTitle: TLabel
+      Caption = 'Uso da Classe SEM Dependency Injection'
+    end
+  end
+  object Label1: TLabel[1]
+    Left = 44
+    Height = 51
+    Top = 58
+    Width = 493
+    Anchors = []
+    AutoSize = False
+    Caption = 'NÃO RECOMENDADO: Nessa forma você verá que vai exitir duas dependências a unit da Interface e também a unit da Classe'
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    ParentColor = False
+    ParentFont = False
+    WordWrap = True
+  end
+  object ButtonOpen: TButton[2]
+    Left = 220
+    Height = 25
+    Top = 233
+    Width = 136
+    Anchors = []
+    Caption = 'Execute Engine'
+    OnClick = ButtonOpenClick
+    TabOrder = 1
+  end
+end

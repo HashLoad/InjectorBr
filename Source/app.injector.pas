@@ -26,6 +26,10 @@
 
 unit app.injector;
 
+{$ifdef fpc}
+  {$mode delphi}{$H+}
+{$endif}
+
 interface
 
 uses
@@ -127,6 +131,9 @@ end;
 
 function TInjectorBr.New<T>: T;
 begin
+  if not FRepository.ContainsKey(T.ClassName) then
+    raise Exception.Create('Unregistered class!');
+
   Result := T.Create;
 end;
 

@@ -24,26 +24,45 @@
   @author(Site : https://www.isaquepinheiro.com.br)
 }
 
-unit app.injector.abstract;
-
-{$ifdef fpc}
-  {$mode delphi}{$H+}
-{$endif}
+unit base.form.view;
 
 interface
 
 uses
-  Generics.Collections;
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  StdCtrls,
+  ExtCtrls;
 
 type
-  TInjectorAbstract = class
-  protected
-    FRegisterInterfaces: TDictionary<string, TClass>;
-    FRepository: TDictionary<string, TClass>;
-    FRepositoryLazy: TList<string>;
-    FRepositoryInterface: TDictionary<string, IInterface>;
+  TFormBase = class(TForm)
+    PanelTitle: TPanel;
+    LabelTitle: TLabel;
+    ButtonClose: TButton;
+    procedure ButtonCloseClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
   end;
 
+//var
+//  FormBase: TFormBase;
+
 implementation
+
+{$R *.dfm}
+
+procedure TFormBase.ButtonCloseClick(Sender: TObject);
+begin
+  Self.Close;
+end;
 
 end.

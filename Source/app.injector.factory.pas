@@ -26,6 +26,10 @@
 
 unit app.injector.factory;
 
+{$ifdef fpc}
+  {$mode delphi}{$H+}
+{$endif}
+
 interface
 
 uses Generics.Collections,

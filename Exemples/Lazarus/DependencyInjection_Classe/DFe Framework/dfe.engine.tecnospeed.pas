@@ -24,26 +24,30 @@
   @author(Site : https://www.isaquepinheiro.com.br)
 }
 
-unit app.injector.abstract;
-
-{$ifdef fpc}
-  {$mode delphi}{$H+}
-{$endif}
+unit dfe.engine.tecnospeed;
 
 interface
 
 uses
-  Generics.Collections;
+  SysUtils;
 
 type
-  TInjectorAbstract = class
-  protected
-    FRegisterInterfaces: TDictionary<string, TClass>;
-    FRepository: TDictionary<string, TClass>;
-    FRepositoryLazy: TList<string>;
-    FRepositoryInterface: TDictionary<string, IInterface>;
+  TDFeEngineTecnoSpeed = class
+  public
+    procedure Execute;
   end;
 
 implementation
+
+{ TDFeEngineTecnoSpeed }
+
+procedure TDFeEngineTecnoSpeed.Execute;
+begin
+  raise Exception.Create('DFe Engine TecnoSpeed');
+end;
+
+//initialization
+//  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineTecnoSpeed>;
+
 
 end.

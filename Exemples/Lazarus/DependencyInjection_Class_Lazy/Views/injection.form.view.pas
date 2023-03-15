@@ -24,36 +24,64 @@
   @author(Site : https://www.isaquepinheiro.com.br)
 }
 
-unit dfe.engine.acbr;
+unit injection.form.view;
 
 interface
 
 uses
+  Windows,
+  Messages,
   SysUtils,
-  dfe.engine.interfaces;
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  StdCtrls,
+  ExtCtrls,
+  base.form.view,
+  // Usando o Framework
+  global.controller,
+  app.injector;
 
 type
-  TDFeEngineACBr = class(TInterfacedObject, IDFeEngine)
+  TFormInjctorBr = class(TFormBase)
+    ButtonEngine: TButton;
+    Button1: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure ButtonEngineClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+    FController: TGlobalController;
   public
-    class function New: IDFeEngine;
-    procedure Execute;
+    { Public declarations }
   end;
+
+//var
+//  FormEmitente: TFormEmitente;
 
 implementation
 
-{ TDFeEngineACBr }
+{$R *.dfm}
 
-procedure TDFeEngineACBr.Execute;
+procedure TFormInjctorBr.FormCreate(Sender: TObject);
 begin
-  raise Exception.Create('DFe Engine ACBr');
+  inherited;
+  FController := InjectorBr.Get<TGlobalController>;
 end;
 
-class function TDFeEngineACBr.New: IDFeEngine;
+procedure TFormInjctorBr.Button1Click(Sender: TObject);
 begin
-  Result := Self.Create;
+  inherited;
+  FController.DFeExecuteTS;
 end;
 
-initialization
-  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineACBr>;
+procedure TFormInjctorBr.ButtonEngineClick(Sender: TObject);
+begin
+  inherited;
+  FController.DFeExecuteACBr;
+end;
 
 end.

@@ -24,26 +24,20 @@
   @author(Site : https://www.isaquepinheiro.com.br)
 }
 
-unit app.injector.abstract;
-
-{$ifdef fpc}
-  {$mode delphi}{$H+}
-{$endif}
+unit global.controller.interfaces;
 
 interface
 
 uses
-  Generics.Collections;
+  DB;
 
 type
-  TInjectorAbstract = class
-  protected
-    FRegisterInterfaces: TDictionary<string, TClass>;
-    FRepository: TDictionary<string, TClass>;
-    FRepositoryLazy: TList<string>;
-    FRepositoryInterface: TDictionary<string, IInterface>;
+  IGlobalController = interface
+    ['{7C2BBBF2-C79E-4273-AEA9-77ECCE499DCC}']
+    procedure DFeExecute;
   end;
 
 implementation
 
 end.
+

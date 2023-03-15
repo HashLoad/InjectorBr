@@ -77,14 +77,12 @@ object PrincipalView: TPrincipalView
       AutoSize = False
       Caption = 
         'Nesse exemplo, voc'#234' ver'#225' o uso de inje'#231#227'o de depend'#234'ncia de clas' +
-        'ses como interface.'#13#10#13#10'Nesse formul'#225'rio principal, foi usado a i' +
-        'nje'#231#227'o de depend'#234'ncia para disponibilizar o Engine emissor de no' +
-        'ta fisca para ser usado em todo ponto necess'#225'riol, no caso aqu a' +
-        'presentado pode-se trocar a classe de ACBr para TecnoSpeed, muda' +
-        'ndo somente a linha que foi usada para a injetar a classe usada.' +
-        #13#10#13#10'Veja no OnCreate()'#13#10#13#10'Depois veja no TGlobalController a dep' +
-        'end'#234'ncia sendo capturada e usada, sem ter vincula com nenhuma da' +
-        's classes, nem ACBr e Nem TecnoSpeed, pois usa a Interface.'
+        'ses sem interface.'#13#10#13#10'Nesse formul'#225'rio principal, foi usado a in' +
+        'je'#231#227'o de depend'#234'ncia para disponibilizar o Engine emissor de not' +
+        'a fisca para ser usado em todo ponto necess'#225'riol, no caso aqui a' +
+        'presentado foram adicionados no InjectorBr todos mecanismo exist' +
+        'entes.'#13#10#13#10'Veja no OnCreate()'#13#10#13#10'Depois veja no TGlobalController' +
+        ' a depend'#234'ncia sendo capturada e usada.'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
