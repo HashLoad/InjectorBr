@@ -1,6 +1,7 @@
 [![InjectorBr Framework](https://www.isaquepinheiro.com.br/imagens/injectorbr_github.png)](https://www.isaquepinheiro.com.br)
-[![PageSeguro](https://www.isaquepinheiro.com.br/imagens/doepagueseguro.png)](https://pag.ae/bglQrWD)
-
+<p align="right" width="100%" href="https://pag.ae/bglQrWD">>
+    <img width="100%" src="https://www.isaquepinheiro.com.br/imagens/doepagueseguro.png"> 
+</p>
 
 # InjectorBr Framework for Delphi   [![License](https://img.shields.io/badge/Licence-LGPL--3.0-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
 APPInjector Brasil - Dependency Injection for Delphi
