@@ -26,9 +26,10 @@ Copyright (c) 2023 InjectorBr Framework Team
 
 # Como usar - Interface ?
 
-### Registrando
 
 ```Delphi
+{ Registrando }
+
 unit dfe.engine.acbr;
 
 interface
@@ -62,9 +63,9 @@ initialization
   InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineACBr>;
 
 end.
-```
-### Recuperando
-```Delphi
+
+{ Recuperando }
+
 unit global.controller;
 
 interface
@@ -109,8 +110,9 @@ end.
 ```
 # Como usar - Classe ?
 
-### Registrando
 ```Delphi
+{ Registrando }
+
 unit dfe.engine.acbr;
 
 interface
@@ -137,9 +139,9 @@ initialization
   InjectorBr.RegisterSington<TDFeEngineACBr>;
 
 end.
-```
-### Recuperando
-```Delphi
+
+{ Recuperando }
+
 unit global.controller;
 
 interface
@@ -185,8 +187,9 @@ end.
 
 # Como usar - Classe LazyLoad ?
 
-### Registrando
 ```Delphi
+{ Registrando }
+
 unit dfe.engine.acbr;
 
 interface
@@ -213,9 +216,9 @@ initialization
   InjectorBr.RegisterLazy<TDFeEngineACBr>;
 
 end.
-```
-### Recuperando
-```Delphi
+
+{ Recuperando }
+
 unit global.controller;
 
 interface
