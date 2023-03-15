@@ -28,7 +28,7 @@ Copyright (c) 2023 InjectorBr Framework Team
 
 
 ```Delphi
-{ Registrando }
+{ /////////////////////// Registrando ///////////////////////// }
 
 unit dfe.engine.acbr;
 
@@ -64,7 +64,7 @@ initialization
 
 end.
 
-{ Recuperando }
+{ /////////////////////// Recuperando ///////////////////////// }
 
 unit global.controller;
 
@@ -111,7 +111,7 @@ end.
 # Como usar - Classe ?
 
 ```Delphi
-{ Registrando }
+{ /////////////////////// Registrando ///////////////////////// }
 
 unit dfe.engine.acbr;
 
@@ -140,7 +140,7 @@ initialization
 
 end.
 
-{ Recuperando }
+{ /////////////////////// Recuperando ///////////////////////// }
 
 unit global.controller;
 
@@ -188,7 +188,7 @@ end.
 # Como usar - Classe LazyLoad ?
 
 ```Delphi
-{ Registrando }
+{ /////////////////////// Registrando ///////////////////////// }
 
 unit dfe.engine.acbr;
 
@@ -217,7 +217,7 @@ initialization
 
 end.
 
-{ Recuperando }
+{ /////////////////////// Recuperando ///////////////////////// }
 
 unit global.controller;
 
