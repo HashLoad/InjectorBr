@@ -29,8 +29,7 @@ Embarcadero Delphi XE e superior.
 
 Copyright (c) 2023 InjectorBr Framework Team
 
-# <font color="blue"> Como usar - Interface ?</font>
-
+# Como usar - Interface ?
 
 ```Delphi
 { /////////////////////// Registrando ///////////////////////// }
