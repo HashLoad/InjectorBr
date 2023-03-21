@@ -67,9 +67,20 @@ begin
 end;
 
 procedure TInjectorBr.RegisterSington<T>;
+var
+  LContext: TRttiContext;
+  LType: TRttiType;
 begin
   if not FRepository.ContainsKey(T.ClassName) then
-    FRepository.Add(T.ClassName, T.Create);
+  begin
+    LContext := TRttiContext.Create;
+    try
+      LType := LContext.GetType(T);
+      FRepository.Add(T.ClassName, TClass(LType.AsInstance.MetaClassType.Create));
+    finally
+      LContext.Free;
+    end;
+  end;
 end;
 
 procedure TInjectorBr.RegisterLazy<T>;
@@ -102,12 +113,13 @@ function TInjectorBr.GetInterface<I>: I;
 var
   LContext: TRttiContext;
   LType: TRttiType;
+  LMethod: TRttiMethod;
   LValue: TValue;
   LGuid: string;
+  LInterface: I;
 begin
   Result := nil;
   LGuid := GUIDToString(GetTypeData(TypeInfo(I)).Guid);
-
   if FRepositoryInterface.ContainsKey(LGuid) then
     Exit(I(FRepositoryInterface.Items[LGuid]));
 
@@ -116,17 +128,21 @@ begin
     LContext := TRttiContext.Create;
     try
       LType := LContext.GetType(FRegisterInterfaces.Items[LGuid]);
-      if LType.GetMethod('New') <> nil then
-        LValue := LType.GetMethod('New').Invoke(FRegisterInterfaces.Items[LGuid],[])
+      LMethod := LType.GetMethod('New');
+      if LMethod <> nil then
+        LValue := LMethod.Invoke(LType.AsInstance.MetaClassType,[])
       else
         raise Exception.Create('Implement the method in the class "class function New: IInterfaceYourClass" with "Result := Self.Create;"');
 
-      Result := I(LValue.AsInterface);
-      FRepositoryInterface.Add(LGuid, I(LValue.AsInterface));
+      LInterface := I(LValue.AsInterface);
+      FRepositoryInterface.Add(LGuid, LInterface);
+      Result := LInterface;
     finally
       LContext.Free;
     end;
-  end;
+  end
+  else
+    raise Exception.Create('Unregistered interface!');
 end;
 
 function TInjectorBr.New<T>: T;
