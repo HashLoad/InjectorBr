@@ -1,12 +1,20 @@
-[![InjectorBr Framework](https://www.isaquepinheiro.com.br/imagens/injectorbr_github.png)](https://www.isaquepinheiro.com.br)
-<p align="right" width="50%">
-    <a href="https://pag.ae/bglQrWD"><img src="https://www.isaquepinheiro.com.br/imagens/doepagueseguro.png"> 
+# ResultPairBr Framework for Delphi
+
+InjectorBr é um framework de injeção de dependência para aplicações Delphi. A injeção de dependência é um padrão de projeto de software que permite desacoplar componentes de uma aplicação, tornando-as mais modulares e fáceis de manter, com ele os desenvolvedores podem facilmente criar aplicações modulares e flexíveis, evitando dependências acopladas e reduzindo a complexidade do código. O framework também inclui recursos para gerenciamento de ciclo de vida dos componentes.
+
+<p align="center">
+  <a href="https://www.isaquepinheiro.com.br">
+    <img src="https://www.isaquepinheiro.com.br/projetos/injectorbr-framework-for-delphi-opensource-17400.png" width="200" height="200">
+  </a>
 </p>
 
-# InjectorBr Framework for Delphi   [![License](https://img.shields.io/badge/Licence-LGPL--3.0-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
-APPInjector Brasil - Dependency Injection for Delphi
+## 🏛 Delphi Versions
+Embarcadero Delphi XE e superior.
 
-# :hammer: Recuros de injeção de dependência com InjectorBr :
+## ⚙️ Instalação
+O InjectorBr não precisa ser instalado, basta adicionar as units no path libriry do seu delphi e começar a usa-lo.
+
+## :hammer: Recuros de injeção de dependência com InjectorBr
 
 :heavy_check_mark: `Recurso 1`: ```Injector.Register<TClass>``` para (Class)
 
@@ -18,19 +26,9 @@ Além dessas três formas o framework ainda oferece o recurso de criar uma nova 
 
 :heavy_check_mark: ```Injector<TClass>.New``` para (Nova instância)
 
-### Instalação ###
-O InjectorBr não precisa ser instalado, basta adicionar as units no seu projeto e começar a usa-lo.
+## ⚡️ Como usar
 
-### Requisitos ###
-Embarcadero Delphi XE e superior.
-
-### Versão Atual ###
-0.2023.3.15 (15 Mar 2023)
-
-Copyright (c) 2023 InjectorBr Framework Team
-
-# Como usar - Interface ?
-
+#### Usando com interfaces
 ```Delphi
 { /////////////////////// Registrando ///////////////////////// }
 
@@ -112,7 +110,7 @@ end;
 
 end.
 ```
-# Como usar - Classe ?
+#### Usando com classes
 
 ```Delphi
 { /////////////////////// Registrando ///////////////////////// }
@@ -189,7 +187,7 @@ end;
 end.
 ```
 
-# Como usar - Classe LazyLoad ?
+#### Usando com classe e lazyLoad
 
 ```Delphi
 { /////////////////////// Registrando ///////////////////////// }
@@ -265,3 +263,26 @@ end;
 
 end.
 ```
+
+## ✍️ License
+[![License](https://img.shields.io/badge/Licence-LGPL--3.0-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
+
+## ⛏️ Contribuição
+
+Nossa equipe adoraria receber contribuições para este projeto open source. Se você tiver alguma ideia ou correção de bug, sinta-se à vontade para abrir uma issue ou enviar uma pull request.
+
+[![Issues](https://img.shields.io/badge/Issues-channel-orange)](https://github.com/HashLoad/ormbr/issues)
+
+Para enviar uma pull request, siga estas etapas:
+
+1. Faça um fork do projeto
+2. Crie uma nova branch (`git checkout -b minha-nova-funcionalidade`)
+3. Faça suas alterações e commit (`git commit -am 'Adicionando nova funcionalidade'`)
+4. Faça push da branch (`git push origin minha-nova-funcionalidade`)
+5. Abra uma pull request
+
+## 📬 Contato
+[![Telegram](https://img.shields.io/badge/Telegram-channel-blue)](https://t.me/hashload)
+
+## 💲 Doação
+[![Doação](https://img.shields.io/badge/PagSeguro-contribua-green)](https://pag.ae/bglQrWD)

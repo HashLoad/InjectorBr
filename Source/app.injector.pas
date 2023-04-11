@@ -50,7 +50,8 @@ type
     procedure RegisterInterface<I: IInterface; T: class, constructor>(); overload;
     function &Get<T: class, constructor>(): T; overload;
     function &GetInterface<I: IInterface>(): I; overload;
-    function New<T: class, constructor>(): T;
+    function New<T: class, constructor>(): T; deprecated 'use Factory<T>() instead';
+    function Factory<T: class, constructor>(): T;
   end;
 
 function InjectorBr: TInjectorBr;
@@ -96,6 +97,14 @@ begin
   LGuid := GUIDToString(GetTypeData(TypeInfo(I)).Guid);
   if not FRegisterInterfaces.ContainsKey(LGuid) then
     FRegisterInterfaces.Add(LGuid, T);
+end;
+
+function TInjectorBr.Factory<T>: T;
+begin
+  if not FRepository.ContainsKey(T.ClassName) then
+    raise Exception.Create('Unregistered class!');
+
+  Result := T.Create;
 end;
 
 function TInjectorBr.Get<T>: T;
