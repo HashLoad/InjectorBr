@@ -30,6 +30,8 @@ unit global.controller;
   {$mode delphi}{$H+}
 {$endif}
 
+{$M+}
+
 interface
 
 uses
@@ -47,8 +49,9 @@ type
     FDFeEngine: IDFeEngine;
   public
     constructor Create;
-    class function New: IGlobalController;
     procedure DFeExecute;
+  published
+    class function New: IGlobalController;
   end;
 
 implementation

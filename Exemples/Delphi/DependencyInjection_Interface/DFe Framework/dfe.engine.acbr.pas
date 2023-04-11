@@ -41,6 +41,9 @@ type
 
 implementation
 
+//uses
+//  app.injector;
+
 { TDFeEngineACBr }
 
 procedure TDFeEngineACBr.Execute;
@@ -53,7 +56,7 @@ begin
   Result := Self.Create;
 end;
 
-initialization
-  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineACBr>;
+//initialization
+//  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineACBr>;
 
 end.

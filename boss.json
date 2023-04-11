@@ -1,0 +1,9 @@
+{
+	"name": "APPInjectoBr",
+	"description": "InjectorBr Framework for Delphi",
+	"version": "^main",
+	"homepage": "https://www.isaquepinheiro.com.br",
+	"mainsrc": "Source/",
+	"projects": [],
+	"dependencies": {}
+}
