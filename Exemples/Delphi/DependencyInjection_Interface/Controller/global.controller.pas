@@ -74,3 +74,4 @@ initialization
   InjectorBr.RegisterInterface<IGlobalController, TGlobalController>;;
 
 end.
+

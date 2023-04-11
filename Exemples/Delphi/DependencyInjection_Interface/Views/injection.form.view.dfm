@@ -24,6 +24,7 @@ inherited FormInjectorBr: TFormInjectorBr
   end
   inherited PanelTitle: TPanel
     inherited LabelTitle: TLabel
+      Width = 349
       Caption = 'Uso da Classe COM Dependency Injection'
       ExplicitWidth = 349
     end
