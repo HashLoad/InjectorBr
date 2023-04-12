@@ -63,7 +63,7 @@ var
   LMyClass1: IMyClass;
   LMyClass2: IMyClass;
 begin
-  InjectorBr.RegisterInterface<IMyClass, TMyClass>;
+  InjectorBr.SingtonInterface<IMyClass, TMyClass>;
 
   LMyCLass1 := InjectorBr.GetInterface<IMyClass>;
   LMyCLass2 := InjectorBr.GetInterface<IMyClass>;
@@ -77,7 +77,7 @@ var
   LMyClass1: IMyClass;
   LMyClass2: IMyClass;
 begin
-  InjectorBr.RegisterInterface<IMyClass, TMyClass>;
+  InjectorBr.SingtonInterface<IMyClass, TMyClass>;
 
   LMyCLass1 := InjectorBr.GetInterface<IMyClass>;
   LMyCLass2 := InjectorBr.GetInterface<IMyClass>;
@@ -89,7 +89,7 @@ procedure TTestInjector.TestInjectorInterfaceRefCountEqualTo;
 var
   LMyClass1: IMyClass;
 begin
-  InjectorBr.RegisterInterface<IMyClass, TMyClass>;
+  InjectorBr.SingtonInterface<IMyClass, TMyClass>;
 
   LMyCLass1 := InjectorBr.GetInterface<IMyClass>;
   Assert.AreEqual(TFake(LMyClass1).RefCount, 2, 'different objects' );
@@ -100,7 +100,7 @@ var
   LMyClass1: TMyClass;
   LMyClass2: TMyClass;
 begin
-  InjectorBr.RegisterLazy<TMyClass>;
+  InjectorBr.SingtonLazy<TMyClass>;
 
   LMyCLass1 := InjectorBr.Get<TMyClass>;
   LMyCLass2 := InjectorBr.Get<TMyClass>;
@@ -113,7 +113,7 @@ var
   LMyClass1: TMyClass;
   LMyClass2: TMyClass;
 begin
-  InjectorBr.RegisterSington<TMyClass>;
+  InjectorBr.Sington<TMyClass>;
 
   LMyCLass1 := InjectorBr.Get<TMyClass>;
   LMyCLass2 := InjectorBr.Get<TMyClass>;

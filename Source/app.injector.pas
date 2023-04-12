@@ -45,12 +45,17 @@ type
     class var FInstance: TInjectorBr;
     procedure GetLazy<T: class, constructor>();
   public
-    procedure RegisterSington<T: class, constructor>(); overload;
-    procedure RegisterLazy<T: class>(); overload;
-    procedure RegisterInterface<I: IInterface; T: class, constructor>(); overload;
-    function &Get<T: class, constructor>(): T; overload;
-    function &GetInterface<I: IInterface>(): I; overload;
+    // Deprecated
+    procedure RegisterSington<T: class, constructor>(); deprecated 'use Sington<T>() instead';
+    procedure RegisterLazy<T: class>(); deprecated 'use SingtonLazy<T>() instead';
+    procedure RegisterInterface<I: IInterface; T: class, constructor>(); deprecated 'use SingtonInterface<T>() instead';
     function New<T: class, constructor>(): T; deprecated 'use Factory<T>() instead';
+    //
+    procedure Sington<T: class, constructor>();
+    procedure SingtonLazy<T: class>();
+    procedure SingtonInterface<I: IInterface; T: class, constructor>();
+    function &Get<T: class, constructor>(): T;
+    function &GetInterface<I: IInterface>(): I;
     function Factory<T: class, constructor>(): T;
   end;
 
@@ -68,6 +73,11 @@ begin
 end;
 
 procedure TInjectorBr.RegisterSington<T>;
+begin
+  Sington<T>;
+end;
+
+procedure TInjectorBr.Sington<T>;
 var
   LContext: TRttiContext;
   LType: TRttiType;
@@ -84,19 +94,29 @@ begin
   end;
 end;
 
-procedure TInjectorBr.RegisterLazy<T>;
-begin
-  if FRepositoryLazy.IndexOf(T.ClassName) = -1 then
-    FRepositoryLazy.Add(T.ClassName);
-end;
-
-procedure TInjectorBr.RegisterInterface<I, T>;
+procedure TInjectorBr.SingtonInterface<I, T>;
 var
   LGuid: string;
 begin
   LGuid := GUIDToString(GetTypeData(TypeInfo(I)).Guid);
   if not FRegisterInterfaces.ContainsKey(LGuid) then
     FRegisterInterfaces.Add(LGuid, T);
+end;
+
+procedure TInjectorBr.SingtonLazy<T>;
+begin
+  if FRepositoryLazy.IndexOf(T.ClassName) = -1 then
+    FRepositoryLazy.Add(T.ClassName);
+end;
+
+procedure TInjectorBr.RegisterLazy<T>;
+begin
+  SingtonLazy<T>;
+end;
+
+procedure TInjectorBr.RegisterInterface<I, T>;
+begin
+  SingtonInterface<I, T>;
 end;
 
 function TInjectorBr.Factory<T>: T;
@@ -164,7 +184,7 @@ end;
 
 procedure TInjectorBr.GetLazy<T>;
 begin
-  if not FRepository.ContainsKey(T.ClassName) then
+  if (not FRepository.ContainsKey(T.ClassName)) then
     if (FRepositoryLazy.IndexOf(T.ClassName) > -1) then
       RegisterSington<T>;
 end;
