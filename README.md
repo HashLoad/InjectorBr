@@ -12,7 +12,10 @@ InjectorBr é um framework de injeção de dependência para aplicações Delphi
 Embarcadero Delphi XE e superior.
 
 ## ⚙️ Instalação
-O InjectorBr não precisa ser instalado, basta adicionar as units no path libriry do seu delphi e começar a usa-lo.
+Instalação usando o [`boss install`](https://github.com/HashLoad/boss) commando:
+```sh
+boss install "https://github.com/HashLoad/injectorbr"
+```
 
 ## :hammer: Recuros de injeção de dependência com InjectorBr
 
