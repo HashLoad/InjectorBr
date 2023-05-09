@@ -42,30 +42,37 @@ uses
   app.injector.events;
 
 type
+  TConstructorParams = app.injector.events.TConstructorParams;
+
   TInjectorBr = class(TInjectorContainer)
   private class var
     FInstance: TInjectorBr;
   private
-    procedure _AddEvents(const AClassName: string;
-      const AOnCreate: TProc<TObject>;
-      const AOnDestroy: TProc<TObject>);
+    procedure _AddEvents<T>(const AClassName: string;
+      const AOnCreate: TProc<T>;
+      const AOnDestroy: TProc<T>;
+      const AOnConstructorParams: TConstructorCallback = nil);
   public
     procedure AddInjector(const ATag: String;
       const AInstance: TInjectorBr);
     procedure AddInstance<T: class>(const AInstance: TObject);
     procedure Singleton<T: class, constructor>(
       const AOnCreate: TProc<T> = nil;
-      const AOnDestroy: TProc<T> = nil);
+      const AOnDestroy: TProc<T> = nil;
+      const AOnConstructorParams: TConstructorCallback = nil);
     procedure SingletonLazy<T: class>(
       const AOnCreate: TProc<T> = nil;
-      const AOnDestroy: TProc<T> = nil);
+      const AOnDestroy: TProc<T> = nil;
+      const AOnConstructorParams: TConstructorCallback = nil);
     procedure SingletonInterface<I: IInterface; T: class, constructor>(
       const ATag: string = '';
       const AOnCreate: TProc<T> = nil;
-      const AOnDestroy: TProc<T> = nil);
+      const AOnDestroy: TProc<T> = nil;
+      const AOnConstructorParams: TConstructorCallback = nil);
     procedure Factory<T: class, constructor>(
       const AOnCreate: TProc<T> = nil;
-      const AOnDestroy: TProc<T> = nil);
+      const AOnDestroy: TProc<T> = nil;
+      const AOnConstructorParams: TConstructorCallback = nil);
     procedure Remove<T: class>(const ATag: string = '');
     function &Get<T: class, constructor>(const ATag: String = ''): T;
     function GetTry<T: class, constructor>(const ATag: String = ''): T;
@@ -87,7 +94,8 @@ begin
 end;
 
 procedure TInjectorBr.Singleton<T>(const AOnCreate: TProc<T>;
-  const AOnDestroy: TProc<T>);
+  const AOnDestroy: TProc<T>;
+  const AOnConstructorParams: TConstructorCallback);
 var
   LValue: TServiceData;
 begin
@@ -98,17 +106,15 @@ begin
   LValue := FInjectorFactory.FactorySingleton<T>();
   FInstances.Add(T.ClassName, LValue);
   // Events
-  if Assigned(AOnCreate) or Assigned(AOnDestroy) then
-  begin
-    _AddEvents(T.ClassName, TProc<TObject>(AOnCreate),
-                            TProc<TObject>(AOnDestroy));
-  end;
+  _AddEvents<T>(T.ClassName, AOnCreate, AOnDestroy, AOnConstructorParams);
+  //
   FInstances.Items[T.ClassName].GetInstance<T>(FInjectorEvents);
 end;
 
 procedure TInjectorBr.SingletonInterface<I, T>(const ATag: string;
   const AOnCreate: TProc<T>;
-  const AOnDestroy: TProc<T>);
+  const AOnDestroy: TProc<T>;
+  const AOnConstructorParams: TConstructorCallback);
 var
   LGuid: TGUID;
   LGuidstring: string;
@@ -121,25 +127,17 @@ begin
     raise Exception.Create(Format('Interface %s registered!', [T.ClassName]));
   FRepositoryInterface.Add(LGuidstring, TPair<TClass, TGUID>.Create(T, LGuid));
   // Events
-  if Assigned(AOnDestroy) or Assigned(AOnCreate) then
-  begin
-    _AddEvents(LGuidstring, TProc<TObject>(AOnCreate),
-                            TProc<TObject>(AOnDestroy));
-  end;
+  _AddEvents<T>(LGuidstring, AOnCreate, AOnDestroy, AOnConstructorParams);
 end;
 
 procedure TInjectorBr.SingletonLazy<T>(const AOnCreate: TProc<T>;
-  const AOnDestroy: TProc<T>);
+  const AOnDestroy: TProc<T>; const AOnConstructorParams: TConstructorCallback);
 begin
   if FRepositoryReference.ContainsKey(T.ClassName) then
     raise Exception.Create(Format('Class %s registered!', [T.ClassName]));
   FRepositoryReference.Add(T.ClassName, TServiceData);
   // Events
-  if Assigned(AOnDestroy) or Assigned(AOnCreate) then
-  begin
-    _AddEvents(T.ClassName, TProc<TObject>(AOnCreate),
-                           TProc<TObject>(AOnDestroy));
-  end;
+  _AddEvents<T>(T.ClassName, AOnCreate, AOnDestroy, AOnConstructorParams);
 end;
 
 procedure TInjectorBr.AddInjector(const ATag: String;
@@ -169,7 +167,8 @@ begin
 end;
 
 procedure TInjectorBr.Factory<T>(const AOnCreate: TProc<T>;
-  const AOnDestroy: TProc<T>);
+  const AOnDestroy: TProc<T>;
+  const AOnConstructorParams: TConstructorCallback);
 var
   LValue: TServiceData;
 begin
@@ -180,11 +179,7 @@ begin
   LValue := FInjectorFactory.Factory<T>();
   FInstances.Add(T.ClassName, LValue);
   // Events
-  if Assigned(AOnDestroy) or Assigned(AOnCreate) then
-  begin
-    _AddEvents(T.ClassName, TProc<TObject>(AOnCreate),
-                            TProc<TObject>(AOnDestroy));
-  end;
+  _AddEvents<T>(T.ClassName, AOnCreate, AOnDestroy, AOnConstructorParams);
 end;
 
 function TInjectorBr.Get<T>(const ATag: String): T;
@@ -279,17 +274,22 @@ begin
   FInstances.SafeRemove(LName);
 end;
 
-procedure TInjectorBr._AddEvents(const AClassName: string;
-  const AOnCreate: TProc<TObject>;
-  const AOnDestroy: TProc<TObject>);
+procedure TInjectorBr._AddEvents<T>(const AClassName: string;
+  const AOnCreate: TProc<T>;
+  const AOnDestroy: TProc<T>;
+  const AOnConstructorParams: TConstructorCallback);
 var
   LEvents: TInjectorEvents;
 begin
+  if (not Assigned(AOnDestroy)) and (not Assigned(AOnCreate)) and
+     (not Assigned(AOnConstructorParams)) then
+    Exit;
   if FInjectorEvents.ContainsKey(AClassname) then
     Exit;
   LEvents := TInjectorEvents.Create;
-  LEvents.OnDestroy := AOnDestroy;
-  LEvents.OnCreate := AOnCreate;
+  LEvents.OnDestroy := TProc<TObject>(AOnDestroy);
+  LEvents.OnCreate := TProc<TObject>(AOnCreate);
+  LEvents.OnParams := AOnConstructorParams;
   //
   FInjectorEvents.AddOrSetValue(AClassname, LEvents);
 end;
