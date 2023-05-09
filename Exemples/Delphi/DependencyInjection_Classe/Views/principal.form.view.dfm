@@ -11,10 +11,7 @@ object PrincipalView: TPrincipalView
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  OldCreateOrder = False
   WindowState = wsMaximized
-  OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 15
   object pnlToolbar: TPanel
     Left = 0
@@ -26,6 +23,7 @@ object PrincipalView: TPrincipalView
     Color = 12477460
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 778
     object imgMenu: TImage
       Left = 10
       Top = 10
@@ -65,6 +63,8 @@ object PrincipalView: TPrincipalView
     BevelOuter = bvNone
     ParentBackground = False
     TabOrder = 1
+    ExplicitWidth = 578
+    ExplicitHeight = 502
     DesignSize = (
       584
       511)
@@ -101,6 +101,7 @@ object PrincipalView: TPrincipalView
     OpenedWidth = 200
     Placement = svpLeft
     TabOrder = 2
+    ExplicitHeight = 502
     object catMenuItems: TCategoryButtons
       Left = 0
       Top = -20
@@ -136,6 +137,7 @@ object PrincipalView: TPrincipalView
       RegularButtonColor = clNone
       SelectedButtonColor = clNone
       TabOrder = 0
+      OnEnter = catMenuItemsEnter
     end
   end
   object imlIcons: TImageList
@@ -145,7 +147,7 @@ object PrincipalView: TPrincipalView
     Left = 404
     Top = 238
     Bitmap = {
-      494C0101030080001C0020002000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010103008000040020002000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

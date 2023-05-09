@@ -39,6 +39,9 @@ type
 
 implementation
 
+uses
+  app.injector;
+
 { TDFeEngineACBr }
 
 procedure TDFeEngineACBr.Execute;
@@ -47,6 +50,6 @@ begin
 end;
 
 //initialization
-//  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineACBr>;
+//  InjectorBr.SingletonInterface<IDFeEngine, TDFeEngineACBr>;
 
 end.
