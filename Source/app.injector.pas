@@ -1,4 +1,4 @@
-{
+Ôªø{
          APPInjector Brasil - Dependency Injection for Delphi/Lazarus
 
 
@@ -6,15 +6,15 @@
                           All rights reserved.
 
                     GNU Lesser General Public License
-                      Vers„o 3, 29 de junho de 2007
+                      Vers√£o 3, 29 de junho de 2007
 
        Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
-       A todos È permitido copiar e distribuir cÛpias deste documento de
-       licenÁa, mas mud·-lo n„o È permitido.
+       A todos √© permitido copiar e distribuir c√≥pias deste documento de
+       licen√ßa, mas mud√°-lo n√£o √© permitido.
 
-       Esta vers„o da GNU Lesser General Public License incorpora
-       os termos e condiÁıes da vers„o 3 da GNU General Public License
-       LicenÁa, complementado pelas permissıes adicionais listadas no
+       Esta vers√£o da GNU Lesser General Public License incorpora
+       os termos e condi√ß√µes da vers√£o 3 da GNU General Public License
+       Licen√ßa, complementado pelas permiss√µes adicionais listadas no
        arquivo LICENSE na pasta principal.
 }
 
@@ -36,22 +36,51 @@ uses
   Rtti,
   TypInfo,
   SysUtils,
+  {$ifdef fpc}
+  app.injector.lazarus,
+  {$endif}
   Generics.Collections,
-  app.injector.factory;
+  app.injector.service,
+  app.injector.container,
+  app.injector.events;
 
 type
-  TInjectorBr = class(TInjectorFactory)
+  TConstructorParams = app.injector.events.TConstructorParams;
+
+  TInjectorBr = class(TInjectorContainer)
+  private class var
+    FInstance: TInjectorBr;
   private
-    class var FInstance: TInjectorBr;
-    procedure GetLazy<T: class, constructor>();
+    procedure _AddEvents<T>(AClassName: string;
+      AOnCreate: TProc<T>;
+      AOnDestroy: TProc<T>;
+      AOnConstructorParams: TConstructorCallback = nil);
   public
-    procedure RegisterSington<T: class, constructor>(); overload;
-    procedure RegisterLazy<T: class>(); overload;
-    procedure RegisterInterface<I: IInterface; T: class, constructor>(); overload;
-    function &Get<T: class, constructor>(): T; overload;
-    function &GetInterface<I: IInterface>(): I; overload;
-    function New<T: class, constructor>(): T; deprecated 'use Factory<T>() instead';
-    function Factory<T: class, constructor>(): T;
+    procedure AddInjector(ATag: String;
+      AInstance: TInjectorBr);
+    procedure AddInstance<T: class>(AInstance: TObject);
+    procedure Singleton<T: class, constructor>(
+      AOnCreate: TProc<T> = nil;
+      AOnDestroy: TProc<T> = nil;
+      AOnConstructorParams: TConstructorCallback = nil);
+    procedure SingletonLazy<T: class>(
+      AOnCreate: TProc<T> = nil;
+      AOnDestroy: TProc<T> = nil;
+      AOnConstructorParams: TConstructorCallback = nil);
+    procedure SingletonInterface<I: IInterface; T: class, constructor>(
+      ATag: string = '';
+      AOnCreate: TProc<T> = nil;
+      AOnDestroy: TProc<T> = nil;
+      AOnConstructorParams: TConstructorCallback = nil);
+    procedure Factory<T: class, constructor>(
+      AOnCreate: TProc<T> = nil;
+      AOnDestroy: TProc<T> = nil;
+      AOnConstructorParams: TConstructorCallback = nil);
+    procedure Remove<T: class>(ATag: string = '');
+    function &Get<T: class, constructor>(ATag: String = ''): T;
+    function GetTry<T: class, constructor>(ATag: String = ''): T;
+    function GetInterface<I: IInterface>(ATag: string = ''): I;
+    function GetInstances: TObjectDictionary<string, TServiceData>;
   end;
 
 function InjectorBr: TInjectorBr;
@@ -67,106 +96,212 @@ begin
   Result := TInjectorBr.FInstance;
 end;
 
-procedure TInjectorBr.RegisterSington<T>;
+procedure TInjectorBr.Singleton<T>(AOnCreate: TProc<T>;
+  AOnDestroy: TProc<T>;
+  AOnConstructorParams: TConstructorCallback);
 var
-  LContext: TRttiContext;
-  LType: TRttiType;
+  LValue: TServiceData;
+  LResult: TObject;
+  LKey: string;
 begin
-  if not FRepository.ContainsKey(T.ClassName) then
+  LKey := T.ClassName;
+  if FRepositoryReference.ContainsKey(LKey) then
+    raise Exception.Create(Format('Class %s registered!', [LKey]));
+  FRepositoryReference.Add(LKey, TServiceData);
+  // Singleton
+  LValue := FInjectorFactory.FactorySingleton<T>();
+  FInstances.Add(LKey, LValue);
+  // Events
+  _AddEvents<T>(LKey, AOnCreate, AOnDestroy, AOnConstructorParams);
+  //
+  LResult := TServiceData(FInstances.Items[LKey]).GetInstance<T>(FInjectorEvents);
+end;
+
+procedure TInjectorBr.SingletonInterface<I, T>(ATag: string;
+  AOnCreate: TProc<T>;
+  AOnDestroy: TProc<T>;
+  AOnConstructorParams: TConstructorCallback);
+var
+  LGuid: TGUID;
+  LGuidstring: string;
+begin
+  LGuid := GetTypeData(TypeInfo(I)).Guid;
+  LGuidstring := GUIDTostring(LGuid);
+  if ATag <> '' then
+    LGuidstring := ATag;
+  if FRepositoryInterface.ContainsKey(LGuidstring) then
+    raise Exception.Create(Format('Interface %s registered!', [T.ClassName]));
+  FRepositoryInterface.Add(LGuidstring, TPair<TClass, TGUID>.Create(T, LGuid));
+  // Events
+  _AddEvents<T>(LGuidstring, AOnCreate, AOnDestroy, AOnConstructorParams);
+end;
+
+procedure TInjectorBr.SingletonLazy<T>(AOnCreate: TProc<T>;
+  AOnDestroy: TProc<T>; AOnConstructorParams: TConstructorCallback);
+begin
+  if FRepositoryReference.ContainsKey(T.ClassName) then
+    raise Exception.Create(Format('Class %s registered!', [T.ClassName]));
+  FRepositoryReference.Add(T.ClassName, TServiceData);
+  // Events
+  _AddEvents<T>(T.ClassName, AOnCreate, AOnDestroy, AOnConstructorParams);
+end;
+
+procedure TInjectorBr.AddInjector(ATag: String;
+  AInstance: TInjectorBr);
+var
+  LValue: TServiceData;
+begin
+  if FRepositoryReference.ContainsKey(ATag) then
+    raise Exception.Create(Format('Injector %s registered!', [ATag]));
+  FRepositoryReference.Add(ATag, TServiceData);
+  LValue := TServiceData.Create(TInjectorBr,
+                                AInstance,
+                                TInjectionMode.imSingleton);
+  FInstances.Add(ATag, LValue);
+end;
+
+procedure TInjectorBr.AddInstance<T>(AInstance: TObject);
+var
+  LValue: TServiceData;
+begin
+  if FRepositoryReference.ContainsKey(T.ClassName) then
+    raise Exception.Create(Format('Instance %s registered!', [AInstance.ClassName]));
+  FRepositoryReference.Add(T.ClassName, TServiceData);
+  // Factory
+  LValue := TServiceData.Create(T, AInstance, TInjectionMode.imSingleton);
+  FInstances.Add(T.ClassName, LValue);
+end;
+
+procedure TInjectorBr.Factory<T>(AOnCreate: TProc<T>;
+  AOnDestroy: TProc<T>;
+  AOnConstructorParams: TConstructorCallback);
+var
+  LValue: TServiceData;
+begin
+  if FRepositoryReference.ContainsKey(T.ClassName) then
+    raise Exception.Create(Format('Class %s registered!', [T.ClassName]));
+  FRepositoryReference.Add(T.ClassName, TServiceData);
+  // Factory
+  LValue := FInjectorFactory.Factory<T>();
+  FInstances.Add(T.ClassName, LValue);
+  // Events
+  _AddEvents<T>(T.ClassName, AOnCreate, AOnDestroy, AOnConstructorParams);
+end;
+
+function TInjectorBr.Get<T>(ATag: String): T;
+var
+  LValue: TServiceData;
+  LTag: string;
+begin
+  Result := nil;
+  LTag := ATag;
+  if LTag = '' then
+    LTag := T.ClassName;
+  if not FRepositoryReference.ContainsKey(T.ClassName) then
+    raise Exception.Create(Format('Class %s UnRegistered!', [LTag]));
+  // Lazy
+  if not FInstances.ContainsKey(T.ClassName) then
   begin
-    LContext := TRttiContext.Create;
-    try
-      LType := LContext.GetType(T);
-      FRepository.Add(T.ClassName, TClass(LType.AsInstance.MetaClassType.Create));
-    finally
-      LContext.Free;
-    end;
+    LValue := FInjectorFactory.FactorySingleton<T>;
+    FInstances.Add(T.ClassName, LValue);
   end;
+  Result := FInstances.Items[T.ClassName].GetInstance<T>(FInjectorEvents);
 end;
 
-procedure TInjectorBr.RegisterLazy<T>;
+function TInjectorBr.GetInstances: TObjectDictionary<string, TServiceData>;
 begin
-  if FRepositoryLazy.IndexOf(T.ClassName) = -1 then
-    FRepositoryLazy.Add(T.ClassName);
+  Result := FInstances;
 end;
 
-procedure TInjectorBr.RegisterInterface<I, T>;
+function TInjectorBr.GetInterface<I>(ATag: string): I;
 var
-  LGuid: string;
-begin
-  LGuid := GUIDToString(GetTypeData(TypeInfo(I)).Guid);
-  if not FRegisterInterfaces.ContainsKey(LGuid) then
-    FRegisterInterfaces.Add(LGuid, T);
-end;
-
-function TInjectorBr.Factory<T>: T;
-begin
-  if not FRepository.ContainsKey(T.ClassName) then
-    raise Exception.Create('Unregistered class!');
-
-  Result := T.Create;
-end;
-
-function TInjectorBr.Get<T>: T;
+  LValue: TServiceData;
+  LGuid: TGUID;
+  LGuidstring: string;
+  LClassParam: TClass;
+  LGuidParam: TGUID;
 begin
   Result := nil;
-
-  GetLazy<T>;
-  if not FRepository.ContainsKey(T.ClassName) then
-    Exit;
-
-  Result := T(FRepository.Items[T.ClassName]);
-end;
-
-function TInjectorBr.GetInterface<I>: I;
-var
-  LContext: TRttiContext;
-  LType: TRttiType;
-  LMethod: TRttiMethod;
-  LValue: TValue;
-  LGuid: string;
-  LInterface: I;
-begin
-  Result := nil;
-  LGuid := GUIDToString(GetTypeData(TypeInfo(I)).Guid);
-  if FRepositoryInterface.ContainsKey(LGuid) then
-    Exit(I(FRepositoryInterface.Items[LGuid]));
-
-  if FRegisterInterfaces.ContainsKey(LGuid) then
+  LGuid := GetTypeData(TypeInfo(I)).Guid;
+  LGuidstring := GUIDTostring(LGuid);
+  if ATag <> '' then
+    LGuidstring := ATag;
+  if not FRepositoryInterface.ContainsKey(LGuidstring) then
+    raise Exception.Create(Format('Interface %s UnRegistered!', ['']));
+  // SingletonLazy
+  if not FInstances.ContainsKey(LGuidstring) then
   begin
-    LContext := TRttiContext.Create;
-    try
-      LType := LContext.GetType(FRegisterInterfaces.Items[LGuid]);
-      LMethod := LType.GetMethod('New');
-      if LMethod <> nil then
-        LValue := LMethod.Invoke(LType.AsInstance.MetaClassType,[])
-      else
-        raise Exception.Create('Implement the method in the class "class function New: IInterfaceYourClass" with "Result := Self.Create;"');
-
-      LInterface := I(LValue.AsInterface);
-      FRepositoryInterface.Add(LGuid, LInterface);
-      Result := LInterface;
-    finally
-      LContext.Free;
-    end;
-  end
-  else
-    raise Exception.Create('Unregistered interface!');
+    LClassParam := FRepositoryInterface.Items[LGuidstring].Key;
+    LGuidParam := FRepositoryInterface.Items[LGuidstring].Value;
+    LValue := FInjectorFactory.FactoryInterface<I>(LClassParam, LGuidParam);
+    FInstances.Add(LGuidstring, LValue);
+  end;
+  Result := I(FInstances.Items[LGuidstring].GetInterface<I>(LGuidstring, FInjectorEvents));
 end;
 
-function TInjectorBr.New<T>: T;
+function TInjectorBr.GetTry<T>(ATag: String): T;
+var
+  LValue: TServiceData;
+  LTag: string;
 begin
-  if not FRepository.ContainsKey(T.ClassName) then
-    raise Exception.Create('Unregistered class!');
-
-  Result := T.Create;
+  Result := nil;
+  LTag := ATag;
+  if LTag = '' then
+    LTag := T.ClassName;
+  if not FRepositoryReference.ContainsKey(T.ClassName) then
+    Exit;
+  // Lazy
+  if not FInstances.ContainsKey(T.ClassName) then
+  begin
+    LValue := FInjectorFactory.FactorySingleton<T>;
+    FInstances.Add(T.ClassName, LValue);
+  end;
+  Result := FInstances.Items[T.ClassName].GetInstance<T>(FInjectorEvents);
 end;
 
-procedure TInjectorBr.GetLazy<T>;
+procedure TInjectorBr.Remove<T>(ATag: string);
+var
+  LName: string;
+  LOnDestroy: TProc<T>;
 begin
-  if not FRepository.ContainsKey(T.ClassName) then
-    if (FRepositoryLazy.IndexOf(T.ClassName) > -1) then
-      RegisterSington<T>;
+  LName := ATag;
+  if LName = '' then
+    LName := T.ClassName;
+  // OnDestroy
+  if FInjectorEvents.ContainsKey(LName) then
+  begin
+    LOnDestroy := TProc<T>(FInjectorEvents.Items[LName].OnDestroy);
+    if Assigned(LOnDestroy) then
+      LOnDestroy(T(FInstances.Items[LName].GetInstance));
+  end;
+  if FRepositoryReference.ContainsKey(LName) then
+    FRepositoryReference.Remove(LName);
+  if FRepositoryInterface.ContainsKey(LName) then
+    FRepositoryInterface.Remove(LName);
+  if FInjectorEvents.ContainsKey(LName) then
+    FInjectorEvents.Remove(LName);
+  if FInstances.ContainsKey(LName) then
+    FInstances.Remove(LName);
+end;
+
+procedure TInjectorBr._AddEvents<T>(AClassName: string;
+  AOnCreate: TProc<T>;
+  AOnDestroy: TProc<T>;
+  AOnConstructorParams: TConstructorCallback);
+var
+  LEvents: TInjectorEvents;
+begin
+  if (not Assigned(AOnDestroy)) and (not Assigned(AOnCreate)) and
+     (not Assigned(AOnConstructorParams)) then
+    Exit;
+  if FInjectorEvents.ContainsKey(AClassname) then
+    Exit;
+  LEvents := TInjectorEvents.Create;
+  LEvents.OnDestroy := TProc<TObject>(AOnDestroy);
+  LEvents.OnCreate := TProc<TObject>(AOnCreate);
+  LEvents.OnParams := AOnConstructorParams;
+  //
+  FInjectorEvents.AddOrSetValue(AClassname, LEvents);
 end;
 
 initialization

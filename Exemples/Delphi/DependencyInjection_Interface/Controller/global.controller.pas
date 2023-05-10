@@ -71,7 +71,7 @@ begin
 end;
 
 initialization
-  InjectorBr.RegisterInterface<IGlobalController, TGlobalController>;;
+  InjectorBr.SingletonInterface<IGlobalController, TGlobalController>;
 
 end.
 

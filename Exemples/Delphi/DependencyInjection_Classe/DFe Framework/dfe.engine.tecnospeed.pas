@@ -39,6 +39,9 @@ type
 
 implementation
 
+uses
+  app.injector;
+
 { TDFeEngineTecnoSpeed }
 
 procedure TDFeEngineTecnoSpeed.Execute;
@@ -47,7 +50,7 @@ begin
 end;
 
 //initialization
-//  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineTecnoSpeed>;
+//  InjectorBr.SingletonInterface<IDFeEngine, TDFeEngineTecnoSpeed>;
 
 
 end.

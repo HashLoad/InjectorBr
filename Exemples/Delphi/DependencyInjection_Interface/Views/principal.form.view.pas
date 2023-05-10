@@ -115,8 +115,7 @@ end;
 
 procedure TPrincipalView.FormCreate(Sender: TObject);
 begin
-//  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineTecnoSpeed>;
-  InjectorBr.RegisterInterface<IDFeEngine, TDFeEngineACBr>;
+  InjectorBr.SingletonInterface<IDFeEngine, TDFeEngineACBr>;
 end;
 
 initialization
