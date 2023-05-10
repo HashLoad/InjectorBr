@@ -12,9 +12,13 @@ uses
   DUnitX.Loggers.Xml.NUnit,
   DUnitX.TestFramework,
   UTesteInjector in 'UTesteInjector.pas',
-  app.injector.abstract in '..\Source\app.injector.abstract.pas',
-  app.injector.factory in '..\Source\app.injector.factory.pas',
-  app.injector in '..\Source\app.injector.pas';
+  app.injector in '..\Source\app.injector.pas',
+  app.injector.abstract in '..\Source\Core\app.injector.abstract.pas',
+  app.injector.container in '..\Source\Core\app.injector.container.pas',
+  app.injector.events in '..\Source\Core\app.injector.events.pas',
+  app.injector.factory in '..\Source\Core\app.injector.factory.pas',
+  app.injector.service in '..\Source\Core\app.injector.service.pas',
+  app.injector.lazarus in '..\Source\Lazarus\app.injector.lazarus.pas';
 
 var
   runner : ITestRunner;

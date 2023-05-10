@@ -67,7 +67,7 @@ type
     Label1: TLabel;
     procedure ACT_TradicionalExecute(Sender: TObject);
     procedure ACT_InjectionExecute(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
+    procedure catMenuItemsEnter(Sender: TObject);
   private
   public
   end;
@@ -78,6 +78,7 @@ var
 implementation
 
 uses
+  global.controller,
   tradicional.form.view,
   injection.form.view,
   // Dependency Injection Plugin
@@ -112,10 +113,12 @@ begin
   LForm.Show;
 end;
 
-procedure TPrincipalView.FormCreate(Sender: TObject);
+procedure TPrincipalView.catMenuItemsEnter(Sender: TObject);
 begin
-  InjectorBr.RegisterSington<TDFeEngineTecnoSpeed>;
-  InjectorBr.RegisterSington<TDFeEngineACBr>;
+  InjectorBr.Singleton<TDFeEngineTecnoSpeed>;
+  InjectorBr.Singleton<TDFeEngineACBr>;
+  //
+  InjectorBr.Singleton<TGlobalController>;
 end;
 
 initialization

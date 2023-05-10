@@ -72,7 +72,4 @@ begin
   FDFeEngineTS.Execute;
 end;
 
-initialization
-  InjectorBr.RegisterSington<TGlobalController>;;
-
 end.

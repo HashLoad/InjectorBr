@@ -12,9 +12,12 @@ uses
   dfe.engine.acbr in 'DFe Framework\dfe.engine.acbr.pas',
   dfe.engine.interfaces in 'DFe Framework\dfe.engine.interfaces.pas',
   dfe.engine.tecnospeed in 'DFe Framework\dfe.engine.tecnospeed.pas',
-  app.injector.abstract in '..\..\..\Source\app.injector.abstract.pas',
-  app.injector.factory in '..\..\..\Source\app.injector.factory.pas',
-  app.injector in '..\..\..\Source\app.injector.pas';
+  app.injector in '..\..\..\Source\app.injector.pas',
+  app.injector.abstract in '..\..\..\Source\Core\app.injector.abstract.pas',
+  app.injector.container in '..\..\..\Source\Core\app.injector.container.pas',
+  app.injector.events in '..\..\..\Source\Core\app.injector.events.pas',
+  app.injector.factory in '..\..\..\Source\Core\app.injector.factory.pas',
+  app.injector.service in '..\..\..\Source\Core\app.injector.service.pas';
 
 {$R *.res}
 

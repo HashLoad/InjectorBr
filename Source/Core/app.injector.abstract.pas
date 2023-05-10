@@ -37,11 +37,6 @@ uses
 
 type
   TInjectorAbstract = class
-  protected
-    FRegisterInterfaces: TDictionary<string, TClass>;
-    FRepository: TDictionary<string, TClass>;
-    FRepositoryLazy: TList<string>;
-    FRepositoryInterface: TDictionary<string, IInterface>;
   end;
 
 implementation
