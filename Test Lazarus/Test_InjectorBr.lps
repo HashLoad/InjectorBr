@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="Test_InjectorBr.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="testcase_injectorbr.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="14"/>
+        <CursorPos Y="25"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Source\app.injector.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="133"/>
+        <CursorPos Y="112"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Source\Lazarus\app.injector.lazarus.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Source\Core\app.injector.abstract.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Source\Core\app.injector.container.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="4"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Source\Core\app.injector.events.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="5"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="30"/>
+        <CursorPos Y="91"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Source\Core\app.injector.service.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="52"/>
+        <CursorPos Y="62"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\syshelph.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="11" Y="4"/>
+        <UsageCount Value="10"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="29">
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="142" TopLine="117"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="137" TopLine="113"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="43" TopLine="33"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="137" Column="32" TopLine="121"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="132" Column="38" TopLine="120"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="138" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="60" Column="26" TopLine="54"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="133" Column="46" TopLine="106"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="123" Column="45" TopLine="112"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="133" Column="64" TopLine="123"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="126" TopLine="123"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="128" Column="60" TopLine="123"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="126" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="127" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="128" Column="8" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="126" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="127" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="128" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="131" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="126" Column="16" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="128" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="131" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="127" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="128" Column="69" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="127" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="128" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="131" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="128" Column="34" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.factory.pas"/>
+        <Caret Line="127" TopLine="122"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\Core\app.injector.service.pas"/>
+        <Caret Line="62" TopLine="52"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

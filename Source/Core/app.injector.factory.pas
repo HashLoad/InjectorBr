@@ -26,6 +26,10 @@
 
 unit app.injector.factory;
 
+{$ifdef fpc}
+  {$mode delphi}{$H+}
+{$endif}
+
 interface
 
 uses
@@ -36,11 +40,11 @@ uses
 type
   TInjectorFactory = class
   private
-    function _FactoryInternal(const Args: TArray<TValue>): TServiceData;
+    function _FactoryInternal(Args: TArray<TValue>): TServiceData;
   public
     function FactorySingleton<T: class, constructor>(): TServiceData;
-    function FactoryInterface<I: IInterface>(const AClass: TClass;
-      const AGuid: TGUID): TServiceData;
+    function FactoryInterface<I: IInterface>(AClass: TClass;
+      AGuid: TGUID): TServiceData;
     function Factory<T: class, constructor>(): TServiceData;
   end;
 
@@ -55,12 +59,12 @@ begin
   SetLength(LArgs, 3);
   LArgs[0] := TValue.From<TClass>(T);
   LArgs[1] := TValue.From<TObject>(nil);
-  LArgs[2] := TValue.From<TInjectionMode>(imFactory);
+  LArgs[2] := TValue.From<TInjectionMode>(TInjectionMode.imFactory);
   Result := _FactoryInternal(LArgs);
 end;
 
-function TInjectorFactory.FactoryInterface<I>(const AClass: TClass;
-  const AGuid: TGUID): TServiceData;
+function TInjectorFactory.FactoryInterface<I>(AClass: TClass;
+  AGuid: TGUID): TServiceData;
 var
   LArgs: TArray<TValue>;
 begin
@@ -68,7 +72,7 @@ begin
   LArgs[0] := TValue.From<TClass>(AClass);
   LArgs[1] := TValue.From<TGUID>(AGuid);
   LArgs[2] := TValue.From<IInterface>(nil);
-  LArgs[3] := TValue.From<TInjectionMode>(imSingleton);
+  LArgs[3] := TValue.From<TInjectionMode>(TInjectionMode.imSingleton);
   Result := _FactoryInternal(LArgs);
 end;
 
@@ -79,13 +83,13 @@ begin
   SetLength(LArgs, 3);
   LArgs[0] := TValue.From<TClass>(T);
   LArgs[1] := TValue.From<TObject>(nil);
-  LArgs[2] := TValue.From<TInjectionMode>(imSingleton);
+  LArgs[2] := TValue.From<TInjectionMode>(TInjectionMode.imSingleton);
   Result := _FactoryInternal(LArgs);
 end;
 
 { TODO -oIsaque -cECLBr : Avaliar se deve usar o ECLBr para instanciar a classe }
 function TInjectorFactory._FactoryInternal(
-  const Args: TArray<TValue>): TServiceData;
+  Args: TArray<TValue>): TServiceData;
 var
   LContext: TRttiContext;
   LTypeService: TRttiType;
@@ -100,7 +104,7 @@ begin
     else
       LConstructorMethod := LTypeService.GetMethod('CreateInterface');
     LInstance := LConstructorMethod.Invoke(LTypeService.AsInstance.MetaClassType, Args);
-    Result := LInstance.AsType<TServiceData>;
+    Result := TServiceData(LInstance.AsObject);
   finally
     LContext.Free;
   end;

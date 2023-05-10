@@ -53,6 +53,7 @@ uses
 
 procedure TTestInjector.Setup;
 begin
+
 end;
 
 procedure TTestInjector.TearDown;
@@ -87,7 +88,7 @@ var
 begin
   LInjector := TInjectorBr.Create;
   try
-    LInjector.SingtonInterface<IMyClass, TMyClass>;
+    LInjector.SingletonInterface<IMyClass, TMyClass>;
 
     LMyCLass1 := LInjector.GetInterface<IMyClass>;
     LMyCLass2 := LInjector.GetInterface<IMyClass>;
@@ -107,7 +108,7 @@ var
 begin
   LInjector := TInjectorBr.Create;
   try
-    LInjector.SingtonInterface<IMyClass, TMyClass>('TMyClass');
+    LInjector.SingletonInterface<IMyClass, TMyClass>('TMyClass');
 
     LMyCLass1 := LInjector.GetInterface<IMyClass>('TMyClass');
     LMyCLass2 := LInjector.GetInterface<IMyClass>('TMyClass');
@@ -127,7 +128,7 @@ var
 begin
   LInjector := TInjectorBr.Create;
   try
-    LInjector.SingtonInterface<IMyClass, TMyClass>;
+    LInjector.SingletonInterface<IMyClass, TMyClass>;
 
     LMyCLass1 := LInjector.GetInterface<IMyClass>;
     LMyCLass2 := LInjector.GetInterface<IMyClass>;
@@ -145,7 +146,7 @@ var
 begin
   LInjector := TInjectorBr.Create;
   try
-    LInjector.SingtonInterface<IMyClass, TMyClass>;
+    LInjector.SingletonInterface<IMyClass, TMyClass>;
 
     LMyCLass1 := LInjector.GetInterface<IMyClass>;
     Assert.AreEqual(TFake(LMyClass1).RefCount, 2, 'different objects' );
@@ -162,7 +163,7 @@ var
 begin
   LInjector := TInjectorBr.Create;
   try
-    LInjector.SingtonLazy<TMyClass>;
+    LInjector.Singleton<TMyClass>;
 
     LMyCLass1 := LInjector.Get<TMyClass>;
     LMyCLass2 := LInjector.Get<TMyClass>;
@@ -181,7 +182,7 @@ var
 begin
   LInjector := TInjectorBr.Create;
   try
-    LInjector.Sington<TMyClass>;
+    LInjector.Singleton<TMyClass>;
 
     LMyCLass1 := LInjector.Get<TMyClass>;
     LMyCLass2 := LInjector.Get<TMyClass>;

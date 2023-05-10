@@ -26,6 +26,10 @@
 
 unit app.injector.service;
 
+{$ifdef fpc}
+  {$mode delphi}{$H+}
+{$endif}
+
 interface
 
 uses
@@ -33,11 +37,14 @@ uses
   TypInfo,
   SysUtils,
   Generics.Collections,
+  {$ifdef fpc}
+  app.injector.lazarus,
+  {$endif}
   app.injector.events;
 
 type
   TInjectionMode = (imSingleton, imFactory);
-  TConstructorEvents = TDictionary<string, TInjectorEvents>;
+  TConstructorEvents = TObjectDictionary<string, TInjectorEvents>;
 
   TServiceData = class
   private
@@ -47,43 +54,43 @@ type
     FGuid: TGUID;
     FInterface: IInterface;
     function _FactoryInstance<T: class>(
-      const AInjectorEvents: TConstructorEvents): TObject;
-    function _FactoryInterface<I: IInterface>(const AKey: string;
-      const AInjectorEvents: TConstructorEvents): IInterface;
-    function _Factory(const AParams: TConstructorParams): TValue;
+      AInjectorEvents: TConstructorEvents): T;
+    function _FactoryInterface<I: IInterface>(AKey: string;
+      AInjectorEvents: TConstructorEvents): IInterface;
+    function _Factory(AParams: TConstructorParams): TValue;
   public
-    constructor Create(const AServiceClass: TClass;
-      const AInstance: TObject;
-      const AInjectionMode: TInjectionMode); overload;
-    constructor CreateInterface(const AServiceClass: TClass;
-      const AGuid: TGUID;
-      const AInterface: IInterface;
-      const AInjectionMode: TInjectionMode); overload;
+    constructor Create(AServiceClass: TClass;
+      AInstance: TObject;
+      AInjectionMode: TInjectionMode); overload;
+    constructor CreateInterface(AServiceClass: TClass;
+      AGuid: TGUID;
+      AInterface: IInterface;
+      AInjectionMode: TInjectionMode); overload;
     destructor Destroy; override;
     function ServiceClass: TClass;
     function InjectionMode: TInjectionMode;
     function GetInstance: TObject; overload;
     function GetInstance<T: class>(
-      const AInjectorEvents: TConstructorEvents): T; overload;
-    function GetInterface<I: IInterface>(const AKey: string;
-      const AInjectorEvents: TConstructorEvents): IInterface;
+      AInjectorEvents: TConstructorEvents): T; overload;
+    function GetInterface<I: IInterface>(AKey: string;
+      AInjectorEvents: TConstructorEvents): IInterface;
   end;
 
 implementation
 
-constructor TServiceData.Create(const AServiceClass: TClass;
-  const AInstance: TObject;
-  const AInjectionMode: TInjectionMode);
+constructor TServiceData.Create(AServiceClass: TClass;
+  AInstance: TObject;
+  AInjectionMode: TInjectionMode);
 begin
   FServiceClass := AServiceClass;
   FInstance := AInstance;
   FInjectionMode := AInjectionMode;
 end;
 
-constructor TServiceData.Createinterface(const AServiceClass: TClass;
-  const AGuid: TGuid;
-  const AInterface: IInterface;
-  const AInjectionMode: TInjectionMode);
+constructor TServiceData.Createinterface(AServiceClass: TClass;
+  AGuid: TGuid;
+  AInterface: IInterface;
+  AInjectionMode: TInjectionMode);
 begin
   FServiceClass := AServiceClass;
   FGuid := AGuid;
@@ -99,7 +106,7 @@ begin
 end;
 
 { TODO -oIsaque -cECLBr : Avaliar se deve usar o ECLBr para instanciar a classe }
-function TServiceData._Factory(const AParams: TConstructorParams): TValue;
+function TServiceData._Factory(AParams: TConstructorParams): TValue;
 var
   LContext: TRttiContext;
   LTypeObject: TRttiType;
@@ -121,7 +128,7 @@ begin
 end;
 
 function TServiceData._FactoryInstance<T>(
-  const AInjectorEvents: TConstructorEvents): TObject;
+  AInjectorEvents: TConstructorEvents): T;
 var
   LResult: TValue;
   LOnCreate: TProc<T>;
@@ -139,7 +146,7 @@ begin
   LResult := _Factory(LResultParams);
   if LResult.IsEmpty then
     Exit;
-  Result := LResult.AsObject;
+  Result := T(LResult.AsObject);
   // OnCreate
   if AInjectorEvents.ContainsKey(T.Classname) then
   begin
@@ -149,8 +156,8 @@ begin
   end;
 end;
 
-function TServiceData._FactoryInterface<I>(const AKey: string;
-  const AInjectorEvents: TConstructorEvents): IInterface;
+function TServiceData._FactoryInterface<I>(AKey: string;
+  AInjectorEvents: TConstructorEvents): IInterface;
 var
   LResult: TValue;
   LOnCreate: TProc<I>;
@@ -184,7 +191,7 @@ begin
 end;
 
 function TServiceData.GetInstance<T>(
-  const AInjectorEvents: TConstructorEvents): T;
+  AInjectorEvents: TConstructorEvents): T;
 begin
   Result := nil;
   case FInjectionMode of
@@ -192,17 +199,17 @@ begin
     begin
       if not Assigned(FInstance) then
         FInstance := _FactoryInstance<T>(AInjectorEvents);
-      Result := FInstance as T;
+      Result := T(FInstance);
     end;
     imFactory:
     begin
-      Result := _FactoryInstance<T>(AInjectorEvents) as T;
+      Result := _FactoryInstance<T>(AInjectorEvents);
     end;
   end;
 end;
 
-function TServiceData.GetInterface<I>(const AKey: string;
-  const AInjectorEvents: TConstructorEvents): IInterface;
+function TServiceData.GetInterface<I>(AKey: string;
+  AInjectorEvents: TConstructorEvents): IInterface;
 begin
   Result := nil;
   if not Assigned(FInterface) then
