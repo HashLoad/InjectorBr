@@ -41,26 +41,6 @@ uses
   app.injector.events;
 
 type
-//  TDictionaryServiceDataHelper = class helper for TDictionary<string, TServiceData>
-//  public
-//    procedure SafeRemove(const AKey: string);
-//  end;
-
-//  TDictionaryPairDataHelper = class helper for TDictionary<string, TPair<TClass, TGUID>>
-//  public
-//    procedure SafeRemove(const AKey: string);
-//  end;
-
-//  TDictionaryClassDataHelper = class helper for TDictionary<string, TClass>
-//  public
-//    procedure SafeRemove(const AKey: string);
-//  end;
-
-//  TDictionaryEventsDataHelper = class helper for TDictionary<string, TInjectorEvents>
-//  public
-//    procedure SafeRemove(const AKey: string);
-//  end;
-
   TInjectorContainer = class(TInjectorAbstract)
   protected
     FInjectorFactory: TInjectorFactory;
@@ -95,29 +75,5 @@ begin
   FInstances.Free;
   inherited;
 end;
-
-//procedure TDictionaryServiceDataHelper.SafeRemove(const AKey: string);
-//begin
-//  if Self.ContainsKey(AKey) then
-//    Self.Remove(AKey);
-//end;
-
-//procedure TDictionaryPairDataHelper.SafeRemove(const AKey: string);
-//begin
-//  if Self.ContainsKey(AKey) then
-//    Self.Remove(AKey);
-//end;
-
-///procedure TDictionaryClassDataHelper.SafeRemove(const AKey: string);
-//begin
-//  if Self.ContainsKey(AKey) then
-//    Self.Remove(AKey);
-//end;
-
-//procedure TDictionaryEventsDataHelper.SafeRemove(const AKey: string);
-//begin
-//  if Self.ContainsKey(AKey) then
-//    Self.Remove(AKey);
-//end;
 
 end.
