@@ -1,9 +1,11 @@
 {
 	"name": "APPInjectoBr",
-	"description": "InjectorBr Framework for Delphi",
-	"version": "0.1.6",
-	"homepage": "https://www.isaquepinheiro.com.br",
+	"description": "Injeção Dependência Framework for Delphi",
+	"version": "0.1.7",
+	"homepage": "www.isaquepinheiro.com.br",
 	"mainsrc": "Source/",
 	"projects": [],
-	"dependencies": {}
+	"dependencies": {
+		"github.com/HashLoad/ECLBr": "^1.0.2"
+	}
 }

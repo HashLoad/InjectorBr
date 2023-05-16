@@ -40,11 +40,11 @@ uses
 type
   TInjectorFactory = class
   private
-    function _FactoryInternal(Args: TArray<TValue>): TServiceData;
+    function _FactoryInternal(const Args: TArray<TValue>): TServiceData;
   public
     function FactorySingleton<T: class, constructor>(): TServiceData;
-    function FactoryInterface<I: IInterface>(AClass: TClass;
-      AGuid: TGUID): TServiceData;
+    function FactoryInterface<I: IInterface>(const AClass: TClass;
+      const AGuid: TGUID): TServiceData;
     function Factory<T: class, constructor>(): TServiceData;
   end;
 
@@ -63,8 +63,8 @@ begin
   Result := _FactoryInternal(LArgs);
 end;
 
-function TInjectorFactory.FactoryInterface<I>(AClass: TClass;
-  AGuid: TGUID): TServiceData;
+function TInjectorFactory.FactoryInterface<I>(const AClass: TClass;
+  const AGuid: TGUID): TServiceData;
 var
   LArgs: TArray<TValue>;
 begin
@@ -89,7 +89,7 @@ end;
 
 { TODO -oIsaque -cECLBr : Avaliar se deve usar o ECLBr para instanciar a classe }
 function TInjectorFactory._FactoryInternal(
-  Args: TArray<TValue>): TServiceData;
+  const Args: TArray<TValue>): TServiceData;
 var
   LContext: TRttiContext;
   LTypeService: TRttiType;
