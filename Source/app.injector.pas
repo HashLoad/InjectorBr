@@ -55,6 +55,9 @@ type
       const AOnCreate: TProc<T>;
       const AOnDestroy: TProc<T>;
       const AOnConstructorParams: TConstructorCallback = nil);
+  protected
+    function GetTry<T: class, constructor>(const ATag: String = ''): T;
+    function GetInterfaceTry<I: IInterface>(const ATag: string = ''): I;
   public
     procedure AddInjector(const ATag: String;
       const AInstance: TInjectorBr);
@@ -78,18 +81,17 @@ type
       const AOnConstructorParams: TConstructorCallback = nil);
     procedure Remove<T: class>(const ATag: string = '');
     function &Get<T: class, constructor>(const ATag: String = ''): T;
-    function GetTry<T: class, constructor>(const ATag: String = ''): T;
     function GetInterface<I: IInterface>(const ATag: string = ''): I;
     function GetInstances: TObjectDictionary<string, TServiceData>;
   end;
 
-function InjectorBr: TInjectorBr;
+function AppInjectorBr: TInjectorBr;
 
 implementation
 
 { TInjectorBr }
 
-function InjectorBr: TInjectorBr;
+function AppInjectorBr: TInjectorBr;
 begin
   if not Assigned(TInjectorBr.FInstance) then
     TInjectorBr.FInstance := TInjectorBr.Create;
@@ -113,8 +115,6 @@ begin
   FInstances.Add(LKey, LValue);
   // Events
   _AddEvents<T>(LKey, AOnCreate, AOnDestroy, AOnConstructorParams);
-  //
-  LResult := TServiceData(FInstances.Items[LKey]).GetInstance<T>(FInjectorEvents);
 end;
 
 procedure TInjectorBr.SingletonInterface<I, T>(const ATag: string;
@@ -229,6 +229,32 @@ begin
     LGuidstring := ATag;
   if not FRepositoryInterface.ContainsKey(LGuidstring) then
     raise Exception.Create(Format('Interface %s UnRegistered!', ['']));
+  // SingletonLazy
+  if not FInstances.ContainsKey(LGuidstring) then
+  begin
+    LClassParam := FRepositoryInterface.Items[LGuidstring].Key;
+    LGuidParam := FRepositoryInterface.Items[LGuidstring].Value;
+    LValue := FInjectorFactory.FactoryInterface<I>(LClassParam, LGuidParam);
+    FInstances.Add(LGuidstring, LValue);
+  end;
+  Result := I(FInstances.Items[LGuidstring].GetInterface<I>(LGuidstring, FInjectorEvents));
+end;
+
+function TInjectorBr.GetInterfaceTry<I>(const ATag: string): I;
+var
+  LValue: TServiceData;
+  LGuid: TGUID;
+  LGuidstring: string;
+  LClassParam: TClass;
+  LGuidParam: TGUID;
+begin
+  Result := nil;
+  LGuid := GetTypeData(TypeInfo(I)).Guid;
+  LGuidstring := GUIDTostring(LGuid);
+  if ATag <> '' then
+    LGuidstring := ATag;
+  if not FRepositoryInterface.ContainsKey(LGuidstring) then
+    Exit;
   // SingletonLazy
   if not FInstances.ContainsKey(LGuidstring) then
   begin
