@@ -1,5 +1,5 @@
 {
-         APPInjector Brasil - Dependency Injection for Delphi/Lazarus
+         APPInjector Brasil - Dependency Injection for Delphi
 
 
                    Copyright (c) 2023, Isaque Pinheiro
