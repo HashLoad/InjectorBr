@@ -275,40 +275,40 @@ begin
   LTag := ATag;
   if LTag = '' then
     LTag := T.ClassName;
-  if not FRepositoryReference.ContainsKey(T.ClassName) then
+  if not FRepositoryReference.ContainsKey(LTag) then
     Exit;
   // Lazy
-  if not FInstances.ContainsKey(T.ClassName) then
+  if not FInstances.ContainsKey(LTag) then
   begin
     LValue := FInjectorFactory.FactorySingleton<T>;
-    FInstances.Add(T.ClassName, LValue);
+    FInstances.Add(LTag, LValue);
   end;
-  Result := FInstances.Items[T.ClassName].GetInstance<T>(FInjectorEvents);
+  Result := FInstances.Items[LTag].GetInstance<T>(FInjectorEvents);
 end;
 
 procedure TInjectorBr.Remove<T>(const ATag: string);
 var
-  LName: string;
+  LTag: string;
   LOnDestroy: TProc<T>;
 begin
-  LName := ATag;
-  if LName = '' then
-    LName := T.ClassName;
+  LTag := ATag;
+  if LTag = '' then
+    LTag := T.ClassName;
   // OnDestroy
-  if FInjectorEvents.ContainsKey(LName) then
+  if FInjectorEvents.ContainsKey(LTag) then
   begin
-    LOnDestroy := TProc<T>(FInjectorEvents.Items[LName].OnDestroy);
+    LOnDestroy := TProc<T>(FInjectorEvents.Items[LTag].OnDestroy);
     if Assigned(LOnDestroy) then
-      LOnDestroy(T(FInstances.Items[LName].GetInstance));
+      LOnDestroy(T(FInstances.Items[LTag].GetInstance));
   end;
-  if FRepositoryReference.ContainsKey(LName) then
-    FRepositoryReference.Remove(LName);
-  if FRepositoryInterface.ContainsKey(LName) then
-    FRepositoryInterface.Remove(LName);
-  if FInjectorEvents.ContainsKey(LName) then
-    FInjectorEvents.Remove(LName);
-  if FInstances.ContainsKey(LName) then
-    FInstances.Remove(LName);
+  if FRepositoryReference.ContainsKey(LTag) then
+    FRepositoryReference.Remove(LTag);
+  if FRepositoryInterface.ContainsKey(LTag) then
+    FRepositoryInterface.Remove(LTag);
+  if FInjectorEvents.ContainsKey(LTag) then
+    FInjectorEvents.Remove(LTag);
+  if FInstances.ContainsKey(LTag) then
+    FInstances.Remove(LTag);
 end;
 
 procedure TInjectorBr._AddEvents<T>(const AClassName: string;
