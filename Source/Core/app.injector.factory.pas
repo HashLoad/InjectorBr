@@ -71,7 +71,7 @@ begin
   SetLength(LArgs, 4);
   LArgs[0] := TValue.From<TClass>(AClass);
   LArgs[1] := TValue.From<TGUID>(AGuid);
-  LArgs[2] := TValue.From<IInterface>(nil);
+  LArgs[2] := TValue.From<TValue>(TValue.Empty);
   LArgs[3] := TValue.From<TInjectionMode>(TInjectionMode.imSingleton);
   Result := _FactoryInternal(LArgs);
 end;
@@ -88,8 +88,7 @@ begin
 end;
 
 { TODO -oIsaque -cECLBr : Avaliar se deve usar o ECLBr para instanciar a classe }
-function TInjectorFactory._FactoryInternal(
-  const Args: TArray<TValue>): TServiceData;
+function TInjectorFactory._FactoryInternal(const Args: TArray<TValue>): TServiceData;
 var
   LContext: TRttiContext;
   LTypeService: TRttiType;

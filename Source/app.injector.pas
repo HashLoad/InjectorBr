@@ -47,19 +47,21 @@ uses
 type
   TConstructorParams = app.injector.events.TConstructorParams;
 
+  PInjectorBr = ^TInjectorBr;
   TInjectorBr = class(TInjectorContainer)
-  private class var
-    FInstance: TInjectorBr;
   private
     procedure _AddEvents<T>(const AClassName: string;
       const AOnCreate: TProc<T>;
       const AOnDestroy: TProc<T>;
       const AOnConstructorParams: TConstructorCallback = nil);
+    function _ResolverInterfaceType(const AHandle: PTypeInfo;
+      const AGUID: TGUID): TValue;
+    function _ResolverParams(const AClass: TClass): TConstructorParams; overload;
   protected
-    function GetTry<T: class, constructor>(const ATag: String = ''): T;
+    function GetTry<T: class, constructor>(const ATag: string = ''): T;
     function GetInterfaceTry<I: IInterface>(const ATag: string = ''): I;
   public
-    procedure AddInjector(const ATag: String;
+    procedure AddInjector(const ATag: string;
       const AInstance: TInjectorBr);
     procedure AddInstance<T: class>(const AInstance: TObject);
     procedure Singleton<T: class, constructor>(
@@ -80,22 +82,23 @@ type
       const AOnDestroy: TProc<T> = nil;
       const AOnConstructorParams: TConstructorCallback = nil);
     procedure Remove<T: class>(const ATag: string = '');
-    function &Get<T: class, constructor>(const ATag: String = ''): T;
-    function GetInterface<I: IInterface>(const ATag: string = ''): I;
     function GetInstances: TObjectDictionary<string, TServiceData>;
+    function Get<T: class, constructor>(const ATag: String = ''): T;
+    function GetInterface<I: IInterface>(const ATag: String = ''): I;
   end;
 
-function AppInjectorBr: TInjectorBr;
+function Injector: TInjectorBr;
+
+var
+  InjectorBr: PInjectorBr = nil;
 
 implementation
 
 { TInjectorBr }
 
-function AppInjectorBr: TInjectorBr;
+function Injector: TInjectorBr;
 begin
-  if not Assigned(TInjectorBr.FInstance) then
-    TInjectorBr.FInstance := TInjectorBr.Create;
-  Result := TInjectorBr.FInstance;
+  Result := InjectorBr^;
 end;
 
 procedure TInjectorBr.Singleton<T>(const AOnCreate: TProc<T>;
@@ -147,7 +150,7 @@ begin
   _AddEvents<T>(T.ClassName, AOnCreate, AOnDestroy, AOnConstructorParams);
 end;
 
-procedure TInjectorBr.AddInjector(const ATag: String;
+procedure TInjectorBr.AddInjector(const ATag: string;
   const AInstance: TInjectorBr);
 var
   LValue: TServiceData;
@@ -189,86 +192,51 @@ begin
   _AddEvents<T>(T.ClassName, AOnCreate, AOnDestroy, AOnConstructorParams);
 end;
 
-function TInjectorBr.Get<T>(const ATag: String): T;
-var
-  LValue: TServiceData;
-  LTag: string;
-begin
-  Result := nil;
-  LTag := ATag;
-  if LTag = '' then
-    LTag := T.ClassName;
-  if not FRepositoryReference.ContainsKey(T.ClassName) then
-    raise Exception.Create(Format('Class %s UnRegistered!', [LTag]));
-  // Lazy
-  if not FInstances.ContainsKey(T.ClassName) then
-  begin
-    LValue := FInjectorFactory.FactorySingleton<T>;
-    FInstances.Add(T.ClassName, LValue);
-  end;
-  Result := FInstances.Items[T.ClassName].GetInstance<T>(FInjectorEvents);
-end;
-
 function TInjectorBr.GetInstances: TObjectDictionary<string, TServiceData>;
 begin
   Result := FInstances;
 end;
 
-function TInjectorBr.GetInterface<I>(const ATag: string): I;
+function TInjectorBr.Get<T>(const ATag: String): T;
 var
-  LValue: TServiceData;
-  LGuid: TGUID;
-  LGuidstring: string;
-  LClassParam: TClass;
-  LGuidParam: TGUID;
+  LItem: TServiceData;
 begin
-  Result := nil;
-  LGuid := GetTypeData(TypeInfo(I)).Guid;
-  LGuidstring := GUIDTostring(LGuid);
-  if ATag <> '' then
-    LGuidstring := ATag;
-  if not FRepositoryInterface.ContainsKey(LGuidstring) then
-    raise Exception.Create(Format('Interface %s UnRegistered!', ['']));
-  // SingletonLazy
-  if not FInstances.ContainsKey(LGuidstring) then
-  begin
-    LClassParam := FRepositoryInterface.Items[LGuidstring].Key;
-    LGuidParam := FRepositoryInterface.Items[LGuidstring].Value;
-    LValue := FInjectorFactory.FactoryInterface<I>(LClassParam, LGuidParam);
-    FInstances.Add(LGuidstring, LValue);
-  end;
-  Result := I(FInstances.Items[LGuidstring].GetInterface<I>(LGuidstring, FInjectorEvents));
-end;
-
-function TInjectorBr.GetInterfaceTry<I>(const ATag: string): I;
-var
-  LValue: TServiceData;
-  LGuid: TGUID;
-  LGuidstring: string;
-  LClassParam: TClass;
-  LGuidParam: TGUID;
-begin
-  Result := nil;
-  LGuid := GetTypeData(TypeInfo(I)).Guid;
-  LGuidstring := GUIDTostring(LGuid);
-  if ATag <> '' then
-    LGuidstring := ATag;
-  if not FRepositoryInterface.ContainsKey(LGuidstring) then
+  Result := GetTry<T>(ATag);
+  if Result <> nil then
     Exit;
-  // SingletonLazy
-  if not FInstances.ContainsKey(LGuidstring) then
+  for LItem in GetInstances.Values do
   begin
-    LClassParam := FRepositoryInterface.Items[LGuidstring].Key;
-    LGuidParam := FRepositoryInterface.Items[LGuidstring].Value;
-    LValue := FInjectorFactory.FactoryInterface<I>(LClassParam, LGuidParam);
-    FInstances.Add(LGuidstring, LValue);
+    if LItem.AsInstance is TInjectorBr then
+    begin
+      Result := TInjectorBr(LItem.AsInstance).GetTry<T>(ATag);
+      if Result <> nil then
+        Exit;
+    end;
   end;
-  Result := I(FInstances.Items[LGuidstring].GetInterface<I>(LGuidstring, FInjectorEvents));
 end;
 
-function TInjectorBr.GetTry<T>(const ATag: String): T;
+function TInjectorBr.GetInterface<I>(const ATag: String): I;
+var
+  LItem: TServiceData;
+begin
+  Result := GetInterfaceTry<I>(ATag);
+  if Result <> nil then
+    Exit;
+  for LItem in GetInstances.Values do
+  begin
+    if LItem.AsInstance is TInjectorBr then
+    begin
+      Result := TInjectorBr(LItem.AsInstance).GetInterfaceTry<I>(ATag);
+      if Result <> nil then
+        Exit;
+    end;
+  end;
+end;
+
+function TInjectorBr.GetTry<T>(const ATag: string): T;
 var
   LValue: TServiceData;
+  LParams: TConstructorParams;
   LTag: string;
 begin
   Result := nil;
@@ -278,12 +246,45 @@ begin
   if not FRepositoryReference.ContainsKey(LTag) then
     Exit;
   // Lazy
+  LParams := [];
   if not FInstances.ContainsKey(LTag) then
   begin
     LValue := FInjectorFactory.FactorySingleton<T>;
     FInstances.Add(LTag, LValue);
   end;
-  Result := FInstances.Items[LTag].GetInstance<T>(FInjectorEvents);
+  if (FInstances.Items[LTag].AsInstance = nil) and (FInjectorEvents.Count = 0) then
+    LParams := _ResolverParams(FInstances.Items[LTag].ServiceClass);
+  Result := FInstances.Items[LTag].GetInstance<T>(FInjectorEvents, LParams);
+end;
+
+function TInjectorBr.GetInterfaceTry<I>(const ATag: string): I;
+var
+  LServiceData: TServiceData;
+  LParams: TConstructorParams;
+  LGuid: TGUID;
+  LGuidstring: string;
+  LKey: TClass;
+  LValue: TGUID;
+begin
+  Result := nil;
+  LGuid := GetTypeData(TypeInfo(I)).Guid;
+  LGuidstring := GUIDTostring(LGuid);
+  if ATag <> '' then
+    LGuidstring := ATag;
+  if not FRepositoryInterface.ContainsKey(LGuidstring) then
+    Exit;
+  // SingletonLazy
+  LParams := [];
+  if not FInstances.ContainsKey(LGuidstring) then
+  begin
+    LKey := FRepositoryInterface.Items[LGuidstring].Key;
+    LValue := FRepositoryInterface.Items[LGuidstring].Value;
+    LServiceData := FInjectorFactory.FactoryInterface<I>(LKey, LValue);
+    FInstances.Add(LGuidstring, LServiceData);
+  end;
+  if (FInstances.Items[LGuidstring].AsInstance = nil) and (FInjectorEvents.Count = 0) then
+    LParams := _ResolverParams(FInstances.Items[LGuidstring].ServiceClass);
+  Result := FInstances.Items[LGuidstring].GetInterface<I>(LGuidstring, FInjectorEvents, LParams);
 end;
 
 procedure TInjectorBr.Remove<T>(const ATag: string);
@@ -299,7 +300,7 @@ begin
   begin
     LOnDestroy := TProc<T>(FInjectorEvents.Items[LTag].OnDestroy);
     if Assigned(LOnDestroy) then
-      LOnDestroy(T(FInstances.Items[LTag].GetInstance));
+      LOnDestroy(T(FInstances.Items[LTag].AsInstance));
   end;
   if FRepositoryReference.ContainsKey(LTag) then
     FRepositoryReference.Remove(LTag);
@@ -331,10 +332,98 @@ begin
   FInjectorEvents.AddOrSetValue(AClassname, LEvents);
 end;
 
+function TInjectorBr._ResolverInterfaceType(const AHandle: PTypeInfo;
+  const AGUID: TGUID): TValue;
+var
+  LValue: TValue;
+  LResult: TValue;
+  LInterface: IInterface;
+begin
+  Result := TValue.From(nil);
+  LValue := TValue.From(GetInterface<IInterface>(GUIDToString(AGUID)));
+  if Supports(LValue.AsInterface, AGUID, LInterface) then
+  begin
+    TValue.Make(@LInterface, AHandle, LResult);
+    Result := LResult;
+  end;
+end;
+
+function TInjectorBr._ResolverParams(const AClass: TClass): TConstructorParams;
+
+  function ToStringParams(const AValues: TArray<TValue>): string;
+  var
+    LIndex: Integer;
+  begin
+    Result := '';
+    for LIndex := 0 to High(AValues) do
+    begin
+      Result := Result + AValues[LIndex].ToString;
+      if LIndex < High(AValues) then
+        Result := Result + ', ';
+    end;
+  end;
+
+var
+  LRttiContext: TRttiContext;
+  LRttiType: TRttiType;
+  LRttiMethod: TRttiMethod;
+  LParameters: TArray<TRttiParameter>;
+  LParameterValues: TArray<TValue>;
+  LParameter: TRttiParameter;
+  LParameterType: TRttiType;
+  LInterfaceType: TRttiInterfaceType;
+  LFor: integer;
+begin
+  Result := [];
+  LRttiContext := TRttiContext.Create;
+  try
+    LRttiType := LRttiContext.GetType(AClass);
+    if not Assigned(LRttiType) then
+      exit;
+    LRttiMethod := LRttiType.GetMethod('Create');
+    LParameters := LRttiMethod.GetParameters;
+    SetLength(LParameterValues, Length(LParameters));
+    try
+      for LFor := 0 to High(LParameters) do
+      begin
+        LParameter := LParameters[LFor];
+        LParameterType := LParameter.ParamType;
+        case LParameterType.TypeKind of
+          tkClass:
+            LParameterValues[LFor] := TValue.From(Get<TObject>(LParameterType.Handle.Name))
+                                            .Cast(LParameterType.Handle);
+          tkInterface:
+          begin
+            LInterfaceType := LRttiContext.GetType(LParameterType.Handle) as TRttiInterfaceType;
+            LParameterValues[LFor] := _ResolverInterfaceType(LParameterType.Handle,
+                                                             LInterfaceType.GUID);
+          end;
+          tkClassRef:
+            LParameterValues[LFor] := TValue.From(Get<TObject>(LParameterType.Handle.Name))
+                                            .Cast(LParameterType.Handle);
+          else
+            LParameterValues[LFor] := TValue.From(nil);
+        end;
+      end;
+    except
+      on E: Exception do
+        raise Exception.Create(E.Message + ' => ' + ToStringParams(LParameterValues));
+    end;
+    Result := LParameterValues;
+  finally
+    LRttiContext.Free;
+  end;
+end;
+
 initialization
+  New(InjectorBr);
+  InjectorBr^ := TInjectorBr.Create;
 
 finalization
-  if Assigned(TInjectorBr.FInstance) then
-    TInjectorBr.FInstance.Free;
+  if Assigned(InjectorBr) then
+  begin
+    InjectorBr^.Free;
+    Dispose(InjectorBr);
+  end;
 
 end.
