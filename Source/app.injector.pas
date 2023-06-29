@@ -390,7 +390,7 @@ begin
         LParameterType := LParameter.ParamType;
         case LParameterType.TypeKind of
           tkClass:
-            LParameterValues[LFor] := TValue.From(Get<TObject>(LParameterType.Handle.Name))
+            LParameterValues[LFor] := TValue.From(Get<TObject>(String(LParameterType.Handle.Name)))
                                             .Cast(LParameterType.Handle);
           tkInterface:
           begin
@@ -399,7 +399,7 @@ begin
                                                              LInterfaceType.GUID);
           end;
           tkClassRef:
-            LParameterValues[LFor] := TValue.From(Get<TObject>(LParameterType.Handle.Name))
+            LParameterValues[LFor] := TValue.From(Get<TObject>(String(LParameterType.Handle.Name)))
                                             .Cast(LParameterType.Handle);
           else
             LParameterValues[LFor] := TValue.From(nil);

@@ -37,7 +37,8 @@ type
     FClass: TParamClass;
     FInterface: IParamClass;
   public
-    constructor Create(const AClass: TParamClass; const AInterface: IParamClass);
+    constructor Create(const AClass: TParamClass;
+                       const AInterface: IParamClass);
     property ParamClass: TParamClass read FClass;
     property ParamInterface: IParamClass read FInterface;
   end;
@@ -65,7 +66,7 @@ type
     procedure TestInjectorInterfaceRefCountEqualTo;
     [Test]
     procedure TestInjectorInterfaceGetMessage;
-//    [Test]
+    [Test]
     procedure TestInjectorAutoInjectParams;
   end;
 
@@ -116,7 +117,7 @@ begin
     LMyCLass1 := LInjector.GetInterface<IMyClass>;
     LMyCLass2 := LInjector.GetInterface<IMyClass>;
 
-    Assert.AreEqual(TFake(LMyClass1), TFake(LMyClass2), '(MyClass1 <> MyClass2)' );
+    Assert.AreEqual(LMyClass1, LMyClass2, '(MyClass1 <> MyClass2)' );
     Assert.AreEqual(TFake(LMyClass1).RefCount, TFake(LMyClass2).RefCount, '(MyClass1.RefCount <> MyClass2.RefCount)' );
   finally
     LInjector.Free;
@@ -152,7 +153,7 @@ begin
     LMyCLass1 := LInjector.GetInterface<IMyClass>('TMyClass');
     LMyCLass2 := LInjector.GetInterface<IMyClass>('TMyClass');
 
-    Assert.AreEqual(TFake(LMyClass1), TFake(LMyClass2), '(LMyClass1 <> LMyClass2)' );
+    Assert.AreEqual(LMyClass1, LMyClass2, '(LMyClass1 <> LMyClass2)' );
   finally
     LInjector.Free;
   end;
@@ -201,7 +202,7 @@ var
 begin
   LInjector := TInjectorBr.Create;
   try
-    LInjector.Singleton<TMyClass>;
+    LInjector.SingletonLazy<TMyClass>;
 
     LMyCLass1 := LInjector.Get<TMyClass>;
     LMyCLass2 := LInjector.Get<TMyClass>;
