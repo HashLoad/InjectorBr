@@ -26,17 +26,11 @@
 
 unit app.injector.events;
 
-{$ifdef fpc}
-  {$mode delphi}{$H+}
-{$endif}
 
 interface
 
 uses
   Rtti,
-  {$ifdef fpc}
-  app.injector.lazarus,
-  {$endif}
   SysUtils;
 
 type

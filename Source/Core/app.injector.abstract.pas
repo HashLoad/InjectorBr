@@ -26,10 +26,6 @@
 
 unit app.injector.abstract;
 
-{$ifdef fpc}
-  {$mode delphi}{$H+}
-{$endif}
-
 interface
 
 uses

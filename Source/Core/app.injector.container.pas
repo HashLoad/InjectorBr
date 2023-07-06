@@ -26,10 +26,6 @@
 
 unit app.injector.container;
 
-{$ifdef fpc}
-  {$mode delphi}{$H+}
-{$endif}
-
 interface
 
 uses

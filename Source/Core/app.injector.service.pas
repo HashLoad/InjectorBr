@@ -26,10 +26,6 @@
 
 unit app.injector.service;
 
-{$ifdef fpc}
-  {$mode delphi}{$H+}
-{$endif}
-
 interface
 
 uses
@@ -37,9 +33,6 @@ uses
   TypInfo,
   SysUtils,
   Generics.Collections,
-  {$ifdef fpc}
-  app.injector.lazarus,
-  {$endif}
   app.injector.events;
 
 type
