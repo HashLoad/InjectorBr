@@ -367,11 +367,11 @@ var
   LRttiContext: TRttiContext;
   LRttiType: TRttiType;
   LRttiMethod: TRttiMethod;
-  LParameters: TArray<TRttiParameter>;
-  LParameterValues: TArray<TValue>;
   LParameter: TRttiParameter;
   LParameterType: TRttiType;
   LInterfaceType: TRttiInterfaceType;
+  LParameters: TArray<TRttiParameter>;
+  LParameterValues: TArray<TValue>;
   LFor: integer;
 begin
   Result := [];
@@ -389,18 +389,17 @@ begin
         LParameter := LParameters[LFor];
         LParameterType := LParameter.ParamType;
         case LParameterType.TypeKind of
-          tkClass:
+          tkClass, tkClassRef:
+          begin
             LParameterValues[LFor] := TValue.From(Get<TObject>(String(LParameterType.Handle.Name)))
                                             .Cast(LParameterType.Handle);
+          end;
           tkInterface:
           begin
             LInterfaceType := LRttiContext.GetType(LParameterType.Handle) as TRttiInterfaceType;
             LParameterValues[LFor] := _ResolverInterfaceType(LParameterType.Handle,
                                                              LInterfaceType.GUID);
           end;
-          tkClassRef:
-            LParameterValues[LFor] := TValue.From(Get<TObject>(String(LParameterType.Handle.Name)))
-                                            .Cast(LParameterType.Handle);
           else
             LParameterValues[LFor] := TValue.From(nil);
         end;

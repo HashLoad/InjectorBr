@@ -96,6 +96,7 @@ end;
 
 destructor TServiceData.Destroy;
 begin
+  FInterface := nil;
   if Assigned(FInstance) then
     FInstance.Free;
   inherited;
