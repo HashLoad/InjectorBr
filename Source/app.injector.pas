@@ -49,7 +49,7 @@ type
 
   PInjectorBr = ^TInjectorBr;
   TInjectorBr = class(TInjectorContainer)
-  private
+  strict private
     procedure _AddEvents<T>(const AClassName: string;
       const AOnCreate: TProc<T>;
       const AOnDestroy: TProc<T>;

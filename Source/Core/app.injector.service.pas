@@ -102,7 +102,6 @@ begin
   inherited;
 end;
 
-{ TODO -oIsaque -cECLBr : Avaliar se deve usar o ECLBr para instanciar a classe }
 function TServiceData._Factory(const AParams: TConstructorParams): TValue;
 var
   LContext: TRttiContext;

@@ -83,7 +83,6 @@ begin
   Result := _FactoryInternal(LArgs);
 end;
 
-{ TODO -oIsaque -cECLBr : Avaliar se deve usar o ECLBr para instanciar a classe }
 function TInjectorFactory._FactoryInternal(const Args: TArray<TValue>): TServiceData;
 var
   LContext: TRttiContext;
