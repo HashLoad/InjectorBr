@@ -96,12 +96,12 @@ end;
 
 destructor TServiceData.Destroy;
 begin
+  FInterface := nil;
   if Assigned(FInstance) then
     FInstance.Free;
   inherited;
 end;
 
-{ TODO -oIsaque -cECLBr : Avaliar se deve usar o ECLBr para instanciar a classe }
 function TServiceData._Factory(const AParams: TConstructorParams): TValue;
 var
   LContext: TRttiContext;

@@ -6,6 +6,6 @@
 	"mainsrc": "Source/",
 	"projects": [],
 	"dependencies": {
-		"github.com/HashLoad/ECLBr": "^1.0.4"
+		"github.com/isaquepinheiro/eclbr": "^0.0.1"
 	}
 }
