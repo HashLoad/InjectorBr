@@ -40,9 +40,9 @@ type
   TInjectorContainer = class(TInjectorAbstract)
   protected
     FInjectorFactory: TInjectorFactory;
-    FRepositoryReference: TDictionary<string, TClass>;
-    FRepositoryInterface: TDictionary<string, TPair<TClass, TGUID>>;
-    FInstances: TObjectDictionary<string, TServiceData>;
+    FRepositoryReference: TDictionary<String, TClass>;
+    FRepositoryInterface: TDictionary<String, TPair<TClass, TGUID>>;
+    FInstances: TObjectDictionary<String, TServiceData>;
     FInjectorEvents: TConstructorEvents;
   public
     constructor Create; virtual;
@@ -56,9 +56,9 @@ implementation
 constructor TInjectorContainer.Create;
 begin
   FInjectorFactory := TInjectorFactory.Create;
-  FRepositoryReference := TDictionary<string, TClass>.Create;
-  FRepositoryInterface := TDictionary<string, TPair<TClass, TGUID>>.Create;
-  FInstances := TObjectDictionary<string, TServiceData>.Create([doOwnsValues]);
+  FRepositoryReference := TDictionary<String, TClass>.Create;
+  FRepositoryInterface := TDictionary<String, TPair<TClass, TGUID>>.Create;
+  FInstances := TObjectDictionary<String, TServiceData>.Create([doOwnsValues]);
   FInjectorEvents := TConstructorEvents.Create([doOwnsValues]);
 end;
 
@@ -73,3 +73,5 @@ begin
 end;
 
 end.
+
+

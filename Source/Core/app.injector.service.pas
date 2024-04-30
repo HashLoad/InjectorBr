@@ -37,7 +37,7 @@ uses
 
 type
   TInjectionMode = (imSingleton, imFactory);
-  TConstructorEvents = TObjectDictionary<string, TInjectorEvents>;
+  TConstructorEvents = TObjectDictionary<String, TInjectorEvents>;
 
   TServiceData = class
   private
@@ -48,7 +48,7 @@ type
     FGuid: TGUID;
     function _FactoryInstance<T: class>(const AInjectorEvents: TConstructorEvents;
       const AParams: TConstructorParams = nil): T;
-    function _FactoryInterface<I: IInterface>(const AKey: string;
+    function _FactoryInterface<I: IInterface>(const AKey: String;
       const AInjectorEvents: TConstructorEvents;
       const AParams: TConstructorParams = nil): TValue;
     function _Factory(const AParams: TConstructorParams): TValue;
@@ -67,7 +67,7 @@ type
     function GetInstance<T: class>(
       const AInjectorEvents: TConstructorEvents;
       const AParams: TConstructorParams): T; overload;
-    function GetInterface<I: IInterface>(const AKey: string;
+    function GetInterface<I: IInterface>(const AKey: String;
       const AInjectorEvents: TConstructorEvents;
       const AParams: TConstructorParams): I;
   end;
@@ -157,7 +157,7 @@ begin
   end;
 end;
 
-function TServiceData._FactoryInterface<I>(const AKey: string;
+function TServiceData._FactoryInterface<I>(const AKey: String;
   const AInjectorEvents: TConstructorEvents;
   const AParams: TConstructorParams): TValue;
 var
@@ -212,11 +212,10 @@ begin
   end;
 end;
 
-function TServiceData.GetInterface<I>(const AKey: string;
+function TServiceData.GetInterface<I>(const AKey: String;
   const AInjectorEvents: TConstructorEvents;
   const AParams: TConstructorParams): I;
 begin
-  Result := nil;
   if not FInterface.IsObjectInstance then
   begin
     try
@@ -240,3 +239,5 @@ begin
 end;
 
 end.
+
+

@@ -50,7 +50,7 @@ type
   PInjectorBr = ^TInjectorBr;
   TInjectorBr = class(TInjectorContainer)
   strict private
-    procedure _AddEvents<T>(const AClassName: string;
+    procedure _AddEvents<T>(const AClassName: String;
       const AOnCreate: TProc<T>;
       const AOnDestroy: TProc<T>;
       const AOnConstructorParams: TConstructorCallback = nil);
@@ -58,10 +58,10 @@ type
       const AGUID: TGUID): TValue;
     function _ResolverParams(const AClass: TClass): TConstructorParams; overload;
   protected
-    function GetTry<T: class, constructor>(const ATag: string = ''): T;
-    function GetInterfaceTry<I: IInterface>(const ATag: string = ''): I;
+    function GetTry<T: class, constructor>(const ATag: String = ''): T;
+    function GetInterfaceTry<I: IInterface>(const ATag: String = ''): I;
   public
-    procedure AddInjector(const ATag: string;
+    procedure AddInjector(const ATag: String;
       const AInstance: TInjectorBr);
     procedure AddInstance<T: class>(const AInstance: TObject);
     procedure Singleton<T: class, constructor>(
@@ -73,7 +73,7 @@ type
       const AOnDestroy: TProc<T> = nil;
       const AOnConstructorParams: TConstructorCallback = nil);
     procedure SingletonInterface<I: IInterface; T: class, constructor>(
-      const ATag: string = '';
+      const ATag: String = '';
       const AOnCreate: TProc<T> = nil;
       const AOnDestroy: TProc<T> = nil;
       const AOnConstructorParams: TConstructorCallback = nil);
@@ -81,8 +81,8 @@ type
       const AOnCreate: TProc<T> = nil;
       const AOnDestroy: TProc<T> = nil;
       const AOnConstructorParams: TConstructorCallback = nil);
-    procedure Remove<T: class>(const ATag: string = '');
-    function GetInstances: TObjectDictionary<string, TServiceData>;
+    procedure Remove<T: class>(const ATag: String = '');
+    function GetInstances: TObjectDictionary<String, TServiceData>;
     function Get<T: class, constructor>(const ATag: String = ''): T;
     function GetInterface<I: IInterface>(const ATag: String = ''): I;
   end;
@@ -106,8 +106,7 @@ procedure TInjectorBr.Singleton<T>(const AOnCreate: TProc<T>;
   const AOnConstructorParams: TConstructorCallback);
 var
   LValue: TServiceData;
-  LResult: TObject;
-  LKey: string;
+  LKey: String;
 begin
   LKey := T.ClassName;
   if FRepositoryReference.ContainsKey(LKey) then
@@ -120,23 +119,23 @@ begin
   _AddEvents<T>(LKey, AOnCreate, AOnDestroy, AOnConstructorParams);
 end;
 
-procedure TInjectorBr.SingletonInterface<I, T>(const ATag: string;
+procedure TInjectorBr.SingletonInterface<I, T>(const ATag: String;
   const AOnCreate: TProc<T>;
   const AOnDestroy: TProc<T>;
   const AOnConstructorParams: TConstructorCallback);
 var
   LGuid: TGUID;
-  LGuidstring: string;
+  LGuidString: String;
 begin
   LGuid := GetTypeData(TypeInfo(I)).Guid;
-  LGuidstring := GUIDTostring(LGuid);
+  LGuidString := GUIDToString(LGuid);
   if ATag <> '' then
-    LGuidstring := ATag;
-  if FRepositoryInterface.ContainsKey(LGuidstring) then
+    LGuidString := ATag;
+  if FRepositoryInterface.ContainsKey(LGuidString) then
     raise Exception.Create(Format('Interface %s registered!', [T.ClassName]));
-  FRepositoryInterface.Add(LGuidstring, TPair<TClass, TGUID>.Create(T, LGuid));
+  FRepositoryInterface.Add(LGuidString, TPair<TClass, TGUID>.Create(T, LGuid));
   // Events
-  _AddEvents<T>(LGuidstring, AOnCreate, AOnDestroy, AOnConstructorParams);
+  _AddEvents<T>(LGuidString, AOnCreate, AOnDestroy, AOnConstructorParams);
 end;
 
 procedure TInjectorBr.SingletonLazy<T>(const AOnCreate: TProc<T>;
@@ -150,7 +149,7 @@ begin
   _AddEvents<T>(T.ClassName, AOnCreate, AOnDestroy, AOnConstructorParams);
 end;
 
-procedure TInjectorBr.AddInjector(const ATag: string;
+procedure TInjectorBr.AddInjector(const ATag: String;
   const AInstance: TInjectorBr);
 var
   LValue: TServiceData;
@@ -192,7 +191,7 @@ begin
   _AddEvents<T>(T.ClassName, AOnCreate, AOnDestroy, AOnConstructorParams);
 end;
 
-function TInjectorBr.GetInstances: TObjectDictionary<string, TServiceData>;
+function TInjectorBr.GetInstances: TObjectDictionary<String, TServiceData>;
 begin
   Result := FInstances;
 end;
@@ -233,11 +232,11 @@ begin
   end;
 end;
 
-function TInjectorBr.GetTry<T>(const ATag: string): T;
+function TInjectorBr.GetTry<T>(const ATag: String): T;
 var
   LValue: TServiceData;
   LParams: TConstructorParams;
-  LTag: string;
+  LTag: String;
 begin
   Result := nil;
   LTag := ATag;
@@ -257,39 +256,39 @@ begin
   Result := FInstances.Items[LTag].GetInstance<T>(FInjectorEvents, LParams);
 end;
 
-function TInjectorBr.GetInterfaceTry<I>(const ATag: string): I;
+function TInjectorBr.GetInterfaceTry<I>(const ATag: String): I;
 var
   LServiceData: TServiceData;
   LParams: TConstructorParams;
   LGuid: TGUID;
-  LGuidstring: string;
+  LGuidString: String;
   LKey: TClass;
   LValue: TGUID;
 begin
   Result := nil;
   LGuid := GetTypeData(TypeInfo(I)).Guid;
-  LGuidstring := GUIDTostring(LGuid);
+  LGuidString := GUIDToString(LGuid);
   if ATag <> '' then
-    LGuidstring := ATag;
-  if not FRepositoryInterface.ContainsKey(LGuidstring) then
+    LGuidString := ATag;
+  if not FRepositoryInterface.ContainsKey(LGuidString) then
     Exit;
   // SingletonLazy
   LParams := [];
-  if not FInstances.ContainsKey(LGuidstring) then
+  if not FInstances.ContainsKey(LGuidString) then
   begin
-    LKey := FRepositoryInterface.Items[LGuidstring].Key;
-    LValue := FRepositoryInterface.Items[LGuidstring].Value;
+    LKey := FRepositoryInterface.Items[LGuidString].Key;
+    LValue := FRepositoryInterface.Items[LGuidString].Value;
     LServiceData := FInjectorFactory.FactoryInterface<I>(LKey, LValue);
-    FInstances.Add(LGuidstring, LServiceData);
+    FInstances.Add(LGuidString, LServiceData);
   end;
-  if (FInstances.Items[LGuidstring].AsInstance = nil) and (FInjectorEvents.Count = 0) then
-    LParams := _ResolverParams(FInstances.Items[LGuidstring].ServiceClass);
-  Result := FInstances.Items[LGuidstring].GetInterface<I>(LGuidstring, FInjectorEvents, LParams);
+  if (FInstances.Items[LGuidString].AsInstance = nil) and (FInjectorEvents.Count = 0) then
+    LParams := _ResolverParams(FInstances.Items[LGuidString].ServiceClass);
+  Result := FInstances.Items[LGuidString].GetInterface<I>(LGuidString, FInjectorEvents, LParams);
 end;
 
-procedure TInjectorBr.Remove<T>(const ATag: string);
+procedure TInjectorBr.Remove<T>(const ATag: String);
 var
-  LTag: string;
+  LTag: String;
   LOnDestroy: TProc<T>;
 begin
   LTag := ATag;
@@ -312,7 +311,7 @@ begin
     FInstances.Remove(LTag);
 end;
 
-procedure TInjectorBr._AddEvents<T>(const AClassName: string;
+procedure TInjectorBr._AddEvents<T>(const AClassName: String;
   const AOnCreate: TProc<T>;
   const AOnDestroy: TProc<T>;
   const AOnConstructorParams: TConstructorCallback);
@@ -350,7 +349,7 @@ end;
 
 function TInjectorBr._ResolverParams(const AClass: TClass): TConstructorParams;
 
-  function ToStringParams(const AValues: TArray<TValue>): string;
+  function ToStringParams(const AValues: TArray<TValue>): String;
   var
     LIndex: Integer;
   begin
@@ -426,3 +425,5 @@ finalization
   end;
 
 end.
+
+

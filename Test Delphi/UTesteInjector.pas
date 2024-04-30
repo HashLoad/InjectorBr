@@ -268,8 +268,8 @@ end;
 constructor TMyClassParam.Create(const AClass: TParamClass;
   const AInterface: IParamClass);
 var
-  L1: string;
-  L2: string;
+  L1: String;
+  L2: String;
 begin
   FClass := AClass;
   FInterface := AInterface;
