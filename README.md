@@ -33,7 +33,7 @@ In addition to these three methods, the framework also offers the feature of cre
 
 #### Using with interfaces
 ```Delphi
-{ /////////////////////// Registrando ///////////////////////// }
+{ /////////////////////// Registering ///////////////////////// }
 
 unit dfe.engine.acbr;
 
@@ -69,7 +69,7 @@ initialization
 
 end.
 
-{ /////////////////////// Recuperando ///////////////////////// }
+{ /////////////////////// Recovering ///////////////////////// }
 
 unit global.controller;
 
@@ -116,7 +116,7 @@ end.
 #### Using with classes
 
 ```Delphi
-{ /////////////////////// Registrando ///////////////////////// }
+{ /////////////////////// Registering ///////////////////////// }
 
 unit dfe.engine.acbr;
 
@@ -145,7 +145,7 @@ initialization
 
 end.
 
-{ /////////////////////// Recuperando ///////////////////////// }
+{ /////////////////////// Recovering ///////////////////////// }
 
 unit global.controller;
 
