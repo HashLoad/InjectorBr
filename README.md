@@ -1,6 +1,6 @@
-# ResultPairBr Framework for Delphi
+# InjectorBr Framework for Delphi
 
-InjectorBr é um framework de injeção de dependência para aplicações Delphi. A injeção de dependência é um padrão de projeto de software que permite desacoplar componentes de uma aplicação, tornando-as mais modulares e fáceis de manter, com ele os desenvolvedores podem facilmente criar aplicações modulares e flexíveis, evitando dependências acopladas e reduzindo a complexidade do código. O framework também inclui recursos para gerenciamento de ciclo de vida dos componentes.
+InjectorBr is a dependency injection framework for Delphi applications. Dependency injection is a software design pattern that allows decoupling components of an application, making them more modular and easier to maintain. With it, developers can easily create modular and flexible applications, avoiding tightly coupled dependencies and reducing code complexity. The framework also includes features for managing component lifecycle.
 
 <p align="center">
   <a href="https://www.isaquepinheiro.com.br">
@@ -9,31 +9,31 @@ InjectorBr é um framework de injeção de dependência para aplicações Delphi
 </p>
 
 ## 🏛 Delphi Versions
-Embarcadero Delphi XE e superior.
+Embarcadero Delphi XE and higher.
 
-## ⚙️ Instalação
-Instalação usando o [`boss install`](https://github.com/HashLoad/boss) commando:
+## ⚙️ Install
+Installation using the [`boss install`](https://github.com/HashLoad/boss) command:
 ```sh
 boss install "https://github.com/HashLoad/injectorbr"
 ```
 
-## :hammer: Recuros de injeção de dependência com InjectorBr
+## :hammer: Dependency injection features with InjectorBr
 
-:heavy_check_mark: `Recurso 1`: ```Injector.Register<TClass>``` para (Class)
+:heavy_check_mark: `Recurso 1`: ```Injector.Register<TClass>``` to (Class)
 
-:heavy_check_mark: `Recurso 2`: ```Injector.RegisterLazy<TClass>``` para (Class for LazyLoad)
+:heavy_check_mark: `Recurso 2`: ```Injector.RegisterLazy<TClass>``` to (Class for LazyLoad)
 
-:heavy_check_mark: `Recurso 3`: ```InjectorInterface<IInterface>``` para (Interface)
+:heavy_check_mark: `Recurso 3`: ```InjectorInterface<IInterface>``` to (Interface)
 
-Além dessas três formas o framework ainda oferece o recurso de criar uma nova instância de uma classe que já esteja registras, para isso basta usar o comando:
+In addition to these three methods, the framework also offers the feature of creating a new instance of a class that is already registered. To do this, simply use the command:
 
-:heavy_check_mark: ```Injector<TClass>.New``` para (Nova instância)
+:heavy_check_mark: ```Injector<TClass>.New``` for (New Instance)
 
-## ⚡️ Como usar
+## ⚡️ How to use
 
-#### Usando com interfaces
+#### Using with interfaces
 ```Delphi
-{ /////////////////////// Registrando ///////////////////////// }
+{ /////////////////////// Registering ///////////////////////// }
 
 unit dfe.engine.acbr;
 
@@ -69,7 +69,7 @@ initialization
 
 end.
 
-{ /////////////////////// Recuperando ///////////////////////// }
+{ /////////////////////// Recovering ///////////////////////// }
 
 unit global.controller;
 
@@ -113,10 +113,10 @@ end;
 
 end.
 ```
-#### Usando com classes
+#### Using with classes
 
 ```Delphi
-{ /////////////////////// Registrando ///////////////////////// }
+{ /////////////////////// Registering ///////////////////////// }
 
 unit dfe.engine.acbr;
 
@@ -145,7 +145,7 @@ initialization
 
 end.
 
-{ /////////////////////// Recuperando ///////////////////////// }
+{ /////////////////////// Recovering ///////////////////////// }
 
 unit global.controller;
 
@@ -190,10 +190,10 @@ end;
 end.
 ```
 
-#### Usando com classe e lazyLoad
+#### Using with class and lazyLoad
 
 ```Delphi
-{ /////////////////////// Registrando ///////////////////////// }
+{ /////////////////////// Registering ///////////////////////// }
 
 unit dfe.engine.acbr;
 
@@ -222,7 +222,7 @@ initialization
 
 end.
 
-{ /////////////////////// Recuperando ///////////////////////// }
+{ /////////////////////// Recovering ///////////////////////// }
 
 unit global.controller;
 
@@ -270,22 +270,22 @@ end.
 ## ✍️ License
 [![License](https://img.shields.io/badge/Licence-LGPL--3.0-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
 
-## ⛏️ Contribuição
+## ⛏️ Contribution
 
-Nossa equipe adoraria receber contribuições para este projeto open source. Se você tiver alguma ideia ou correção de bug, sinta-se à vontade para abrir uma issue ou enviar uma pull request.
+Our team would love to receive contributions to this open-source project. If you have any ideas or bug fixes, feel free to open an issue or submit a pull request.
 
 [![Issues](https://img.shields.io/badge/Issues-channel-orange)](https://github.com/HashLoad/ormbr/issues)
 
-Para enviar uma pull request, siga estas etapas:
+To submit a pull request, follow these steps:
 
-1. Faça um fork do projeto
-2. Crie uma nova branch (`git checkout -b minha-nova-funcionalidade`)
-3. Faça suas alterações e commit (`git commit -am 'Adicionando nova funcionalidade'`)
-4. Faça push da branch (`git push origin minha-nova-funcionalidade`)
-5. Abra uma pull request
+1. Fork the project.
+2. Create a new branch. (`git checkout -b my-new-feature`)
+3. Make your changes and commit. (`git commit -am 'Adding new functionality'`)
+4. Push the branch. (`git push origin my-new-feature`)
+5. Open a pull request.
 
-## 📬 Contato
+## 📬 Contact
 [![Telegram](https://img.shields.io/badge/Telegram-channel-blue)](https://t.me/hashload)
 
-## 💲 Doação
+## 💲 Donation
 [![Doação](https://img.shields.io/badge/PagSeguro-contribua-green)](https://pag.ae/bglQrWD)
