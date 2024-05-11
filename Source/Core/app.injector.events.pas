@@ -1,5 +1,5 @@
 {
-         APPInjector Brasil - Dependency Injection for Delphi
+         AppInjector Brasil - Dependency Injection for Delphi
 
 
                    Copyright (c) 2023, Isaque Pinheiro
@@ -18,7 +18,8 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(APPInjectorBr Framework)
+{
+  @abstract(AppInjectorBr Framework)
   @created(15 Mar 2023)
   @author(Isaque Pinheiro <isaquesp@gmail.com>)
   @author(Site : https://www.isaquepinheiro.com.br)

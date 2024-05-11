@@ -1,5 +1,5 @@
 ﻿{
-         APPInjector Brasil - Dependency Injection for Delphi
+         AppInjector Brasil - Dependency Injection for Delphi
 
 
                    Copyright (c) 2023, Isaque Pinheiro
@@ -18,7 +18,8 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(APPInjectorBr Framework)
+{
+  @abstract(AppInjectorBr Framework)
   @created(15 Mar 2023)
   @author(Isaque Pinheiro <isaquesp@gmail.com>)
   @author(Site : https://www.isaquepinheiro.com.br)
@@ -331,22 +332,6 @@ begin
   FInjectorEvents.AddOrSetValue(AClassname, LEvents);
 end;
 
-function TInjectorBr._ResolverInterfaceType(const AHandle: PTypeInfo;
-  const AGUID: TGUID): TValue;
-var
-  LValue: TValue;
-  LResult: TValue;
-  LInterface: IInterface;
-begin
-  Result := TValue.From(nil);
-  LValue := TValue.From(GetInterface<IInterface>(GUIDToString(AGUID)));
-  if Supports(LValue.AsInterface, AGUID, LInterface) then
-  begin
-    TValue.Make(@LInterface, AHandle, LResult);
-    Result := LResult;
-  end;
-end;
-
 function TInjectorBr._ResolverParams(const AClass: TClass): TConstructorParams;
 
   function ToStringParams(const AValues: TArray<TValue>): String;
@@ -371,7 +356,7 @@ var
   LInterfaceType: TRttiInterfaceType;
   LParameters: TArray<TRttiParameter>;
   LParameterValues: TArray<TValue>;
-  LFor: integer;
+  LFor: Integer;
 begin
   Result := [];
   LRttiContext := TRttiContext.Create;
@@ -410,6 +395,22 @@ begin
     Result := LParameterValues;
   finally
     LRttiContext.Free;
+  end;
+end;
+
+function TInjectorBr._ResolverInterfaceType(const AHandle: PTypeInfo;
+  const AGUID: TGUID): TValue;
+var
+  LValue: TValue;
+  LResult: TValue;
+  LInterface: IInterface;
+begin
+  Result := TValue.From(nil);
+  LValue := TValue.From(GetInterface<IInterface>(GUIDToString(AGUID)));
+  if Supports(LValue.AsInterface, AGUID, LInterface) then
+  begin
+    TValue.Make(@LInterface, AHandle, LResult);
+    Result := LResult;
   end;
 end;
 
